@@ -1,0 +1,804 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuyaMode - Ayuda y Soporte</title>
+  <link rel="icon" type="image/x-icon" href="https://guyamode.com/favicon.ico">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #1e3a8a 0%, #7c3aed 50%, #ec4899 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .faq-item {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, margin-top 0.3s ease;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 16px;
+        }
+
+        .faq-icon {
+            font-size: 24px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .contact-form {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 0 3px rgba(236, 72, 153, 0.1);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px 24px;
+            background: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(236, 72, 153, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .help-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            padding: 32px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+        }
+
+        .help-card:hover {
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+            transform: translateY(-4px);
+        }
+
+        .help-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background-color: #10b981;
+            color: #ffffff;
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: #ef4444;
+        }
+
+        .search-box {
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 50px 16px 20px;
+            border: 2px solid #ffffff;
+            border-radius: 50px;
+            font-size: 18px;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .search-input:focus {
+            outline: none;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: #64748b;
+        }
+
+        .search-arrow {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 48px;
+            color: #ffffff;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: bounce 1.5s infinite;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        .search-arrow.show {
+            opacity: 1;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .contact-form {
+                padding: 24px;
+            }
+
+            .hero-section {
+                padding: 60px 0;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="w-full h-full">
+  <div class="w-full min-h-full flex flex-col" style="background-color: #f8f9fa;"><!-- Navigation -->
+   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3"><a href="https://guyamode.com" style="text-decoration: none;"> <img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 60px;" onerror="this.style.display='none'; this.alt='Logo no disponible';"> </a>
+      </div>
+      <div class="hidden md:flex gap-6 items-center"><a href="https://guyamode.com" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Inicio</a> <a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
+      </div>
+     </div>
+    </nav>
+   </header><!-- Main Content -->
+   <main class="flex-1 w-full overflow-auto"><!-- Hero Section -->
+    <section class="hero-section w-full py-20 md:py-32">
+     <div class="hero-content max-w-7xl mx-auto px-4 md:px-6 text-center">
+      <h1 id="page-title" class="text-4xl md:text-6xl font-black mb-6" style="color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.3);">¿Cómo podemos ayudarte?</h1>
+      <p id="page-subtitle" class="text-lg md:text-xl max-w-2xl mx-auto mb-10" style="color: #f1f5f9;">Encuentra respuestas rápidas a las preguntas más comunes o contacta con nuestro equipo</p>
+      <div class="search-box"><input type="text" id="searchInput" class="search-input" placeholder="Buscar en ayuda..."> <span class="search-icon">🔍</span>
+       <div id="searchArrow" class="search-arrow">
+        ⬇️
+       </div>
+      </div>
+     </div>
+    </section><!-- Quick Help Cards -->
+    <section class="w-full py-20" style="background-color: #ffffff;">
+     <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <h2 class="text-3xl md:text-4xl font-black text-center mb-12" style="color: #1e293b;">Recursos de Ayuda</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+       <div class="help-card">
+        <div class="help-icon">
+         📦
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #1e293b;">Seguimiento de Pedidos</h3>
+        <p style="color: #64748b; margin-bottom: 16px;">Rastrea tu pedido en tiempo real y conoce su estado actual.</p><a href="https://guyamode.com/tracking" target="_blank" rel="noopener noreferrer" style="color: #ec4899; font-weight: 600; text-decoration: none;">Rastrear Pedido →</a>
+       </div>
+       <div class="help-card">
+        <div class="help-icon">
+         🔄
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #1e293b;">Devoluciones</h3>
+        <p style="color: #64748b; margin-bottom: 16px;">Información sobre nuestra política de devoluciones en 30 días.</p><a href="https://guyamode.com/returns" target="_blank" rel="noopener noreferrer" style="color: #ec4899; font-weight: 600; text-decoration: none;">Ver Política →</a>
+       </div>
+       <div class="help-card">
+        <div class="help-icon">
+         💳
+        </div>
+        <h3 class="text-xl font-bold mb-3" style="color: #1e293b;">Métodos de Pago</h3>
+        <p style="color: #64748b; margin-bottom: 16px;">Descubre todas las opciones de pago disponibles y seguras.</p><a href="https://guyamode.com/payment" target="_blank" rel="noopener noreferrer" style="color: #ec4899; font-weight: 600; text-decoration: none;">Ver Métodos →</a>
+       </div>
+      </div>
+     </div>
+    </section><!-- FAQ Section -->
+    <section class="w-full py-20" style="background-color: #f8f9fa;">
+     <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 id="faq-title" class="text-3xl md:text-4xl font-black text-center mb-12" style="color: #1e293b;">Preguntas Frecuentes</h2>
+      <div id="faqContainer"><!-- FAQ items will be rendered here -->
+      </div>
+     </div>
+    </section><!-- Contact Form Section -->
+    <section class="w-full py-20" style="background-color: #ffffff;">
+     <div class="max-w-3xl mx-auto px-4 md:px-6">
+      <h2 id="contact-title" class="text-3xl md:text-4xl font-black text-center mb-4" style="color: #1e293b;">¿Necesitas más ayuda?</h2>
+      <p id="contact-subtitle" class="text-center mb-12 text-lg" style="color: #64748b;">Envíanos un mensaje y nuestro equipo te responderá lo antes posible</p>
+      <div class="contact-form">
+       <form id="contactForm">
+        <div class="form-group"><label for="name" class="form-label">Nombre Completo *</label> <input type="text" id="name" name="name" class="form-input" required placeholder="Tu nombre">
+        </div>
+        <div class="form-group"><label for="email" class="form-label">Correo Electrónico *</label> <input type="email" id="email" name="email" class="form-input" required placeholder="tu@email.com">
+        </div>
+        <div class="form-group"><label for="subject" class="form-label">Asunto *</label> <input type="text" id="subject" name="subject" class="form-input" required placeholder="¿En qué podemos ayudarte?">
+        </div>
+        <div class="form-group"><label for="message" class="form-label">Mensaje *</label> <textarea id="message" name="message" class="form-textarea" required placeholder="Describe tu consulta con el mayor detalle posible..."></textarea>
+        </div><button type="submit" id="submitBtn" class="submit-btn"> Enviar Mensaje </button>
+       </form>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="w-full py-12" style="background-color: #1e293b;">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1"><img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 50px;" onerror="this.style.display='none'; this.alt='GuyaMode';">
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Compra</h5>
+       <ul class="space-y-2" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/news" class="hover:opacity-80">Nuevos Llegados</a></li>
+        <li><a href="https://guyamode.com/offers" class="hover:opacity-80">Ofertas</a></li>
+        <li><a href="https://guyamode.com/catalogue" class="hover:opacity-80">Más Vendidos</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Ayuda</h5>
+       <ul class="space-y-2" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/faq" class="hover:opacity-80">FAQ</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Envíos</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Devoluciones</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Síguenos</h5>
+       <div class="flex gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+           <lineargradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FD5949;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#D6249F;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#285AEB;stop-opacity:1" />
+           </lineargradient>
+          </defs> <rect width="36" height="36" rx="8" fill="url(#ig-grad)" /> <rect x="11" y="11" width="14" height="14" rx="3.5" stroke="white" stroke-width="2" fill="none" /> <circle cx="18" cy="18" r="4" stroke="white" stroke-width="2" fill="none" /> <circle cx="23.5" cy="12.5" r="1.2" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#000000" /> <path d="M19.5 11.5C19.5 11.5 19.8 11.5 20.2 11.6C21.4 11.8 22.3 12.5 23 13.5C23.5 14.3 23.8 15.3 23.9 16.4C24 17 24 17.6 24 18.2V19.8C24 20.4 24 21 23.9 21.6C23.8 22.7 23.5 23.7 23 24.5C22.3 25.5 21.4 26.2 20.2 26.4C19.6 26.5 19 26.5 18.4 26.5H17.6C17 26.5 16.4 26.5 15.8 26.4C14.6 26.2 13.7 25.5 13 24.5C12.5 23.7 12.2 22.7 12.1 21.6C12 21 12 20.4 12 19.8V18.2C12 17.6 12 17 12.1 16.4C12.2 15.3 12.5 14.3 13 13.5C13.7 12.5 14.6 11.8 15.8 11.6C16.2 11.5 16.5 11.5 19.5 11.5ZM19.5 13C17 13 16.5 13 16 13.1C15.3 13.2 14.8 13.5 14.4 14C14.1 14.4 13.9 14.9 13.8 15.5C13.7 16 13.7 16.5 13.7 18.2V19.8C13.7 21.5 13.7 22 13.8 22.5C13.9 23.1 14.1 23.6 14.4 24C14.8 24.5 15.3 24.8 16 24.9C16.5 25 17 25 19.5 25C22 25 22.5 25 23 24.9C23.7 24.8 24.2 24.5 24.6 24C24.9 23.6 25.1 23.1 25.2 22.5C25.3 22 25.3 21.5 25.3 19.8V18.2C25.3 16.5 25.3 16 25.2 15.5C25.1 14.9 24.9 14.4 24.6 14C24.2 13.5 23.7 13.2 23 13.1C22.5 13 22 13 19.5 13Z" fill="#00F7EF" /> <path d="M17.2 16.8C17.2 16.4 17.5 16.2 17.8 16.4L21.5 18.6C21.8 18.8 21.8 19.2 21.5 19.4L17.8 21.6C17.5 21.8 17.2 21.6 17.2 21.2V16.8Z" fill="#FF0050" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="text-center pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
+      <p class="text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
+     </div>
+    </div>
+   </footer><!-- Toast Notification -->
+   <div id="toast" class="toast"></div>
+  </div>
+  <script>
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("OVo0UFjAXaNEt0NCO");
+        })();
+
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "¿Cómo podemos ayudarte?",
+            page_subtitle: "Encuentra respuestas rápidas a las preguntas más comunes o contacta con nuestro equipo",
+            faq_title: "Preguntas Frecuentes",
+            contact_title: "¿Necesitas más ayuda?",
+            contact_subtitle: "Envíanos un mensaje y nuestro equipo te responderá lo antes posible",
+            background_color: "#f8f9fa",
+            surface_color: "#ffffff",
+            text_color: "#1e293b",
+            primary_action_color: "#ec4899",
+            secondary_action_color: "#7c3aed",
+            font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+            font_size: 16
+        };
+
+        async function onConfigChange(config) {
+            const pageTitle = config.page_title || defaultConfig.page_title;
+            const pageSubtitle = config.page_subtitle || defaultConfig.page_subtitle;
+            const faqTitle = config.faq_title || defaultConfig.faq_title;
+            const contactTitle = config.contact_title || defaultConfig.contact_title;
+            const contactSubtitle = config.contact_subtitle || defaultConfig.contact_subtitle;
+            
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
+
+            // Update text content
+            const pageTitleElem = document.getElementById('page-title');
+            const pageSubtitleElem = document.getElementById('page-subtitle');
+            const faqTitleElem = document.getElementById('faq-title');
+            const contactTitleElem = document.getElementById('contact-title');
+            const contactSubtitleElem = document.getElementById('contact-subtitle');
+
+            if (pageTitleElem) {
+                pageTitleElem.textContent = pageTitle;
+                pageTitleElem.style.fontFamily = baseFontStack;
+                pageTitleElem.style.fontSize = `${fontSize * 3.5}px`;
+            }
+
+            if (pageSubtitleElem) {
+                pageSubtitleElem.textContent = pageSubtitle;
+                pageSubtitleElem.style.fontFamily = baseFontStack;
+                pageSubtitleElem.style.fontSize = `${fontSize * 1.25}px`;
+            }
+
+            if (faqTitleElem) {
+                faqTitleElem.textContent = faqTitle;
+                faqTitleElem.style.fontFamily = baseFontStack;
+                faqTitleElem.style.fontSize = `${fontSize * 2.5}px`;
+                faqTitleElem.style.color = textColor;
+            }
+
+            if (contactTitleElem) {
+                contactTitleElem.textContent = contactTitle;
+                contactTitleElem.style.fontFamily = baseFontStack;
+                contactTitleElem.style.fontSize = `${fontSize * 2.5}px`;
+                contactTitleElem.style.color = textColor;
+            }
+
+            if (contactSubtitleElem) {
+                contactSubtitleElem.textContent = contactSubtitle;
+                contactSubtitleElem.style.fontFamily = baseFontStack;
+                contactSubtitleElem.style.fontSize = `${fontSize * 1.125}px`;
+            }
+
+            // Update colors
+            const sections = document.querySelectorAll('section');
+            sections.forEach((section, index) => {
+                if (index % 2 === 0) {
+                    section.style.backgroundColor = surfaceColor;
+                } else {
+                    section.style.backgroundColor = backgroundColor;
+                }
+            });
+
+            const submitBtn = document.getElementById('submitBtn');
+            if (submitBtn) {
+                submitBtn.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+                submitBtn.style.fontFamily = baseFontStack;
+            }
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["page_subtitle", config.page_subtitle || defaultConfig.page_subtitle],
+                ["faq_title", config.faq_title || defaultConfig.faq_title],
+                ["contact_title", config.contact_title || defaultConfig.contact_title],
+                ["contact_subtitle", config.contact_subtitle || defaultConfig.contact_subtitle]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // FAQ Data
+        const faqData = [
+            {
+                question: "¿Cuánto tiempo tarda el envío?",
+                answer: "Los envíos nacionales tardan entre 3-5 días hábiles. Los envíos internacionales pueden tardar de 7-15 días hábiles dependiendo del destino. Ofrecemos envío gratis en pedidos superiores a $100."
+            },
+            {
+                question: "¿Cuál es su política de devoluciones?",
+                answer: "Aceptamos devoluciones dentro de los 30 días posteriores a la compra. Los artículos deben estar sin usar, con etiquetas originales y en su empaque original. El reembolso se procesará en 5-10 días hábiles después de recibir el producto."
+            },
+            {
+                question: "¿Qué métodos de pago aceptan?",
+                answer: "Aceptamos tarjetas de crédito y débito (Visa, MasterCard, American Express), PayPal, transferencias bancarias y pago contra entrega en algunas zonas. Todos los pagos son procesados de forma segura."
+            },
+            {
+                question: "¿Cómo puedo rastrear mi pedido?",
+                answer: "Una vez que tu pedido sea enviado, recibirás un correo electrónico con un número de seguimiento. Puedes usar este número en nuestra página de rastreo o directamente en el sitio web de la empresa de mensajería."
+            },
+            {
+                question: "¿Puedo cambiar o cancelar mi pedido?",
+                answer: "Puedes cancelar o modificar tu pedido dentro de las primeras 2 horas después de realizarlo. Después de este tiempo, el pedido ya estará en proceso de preparación y no podrá modificarse. Contáctanos inmediatamente si necesitas hacer cambios."
+            },
+            {
+                question: "¿Ofrecen tallas especiales?",
+                answer: "Sí, ofrecemos una amplia gama de tallas para adaptarnos a todos los cuerpos. Consulta nuestra guía de tallas en cada página de producto. Si no encuentras tu talla, contáctanos y haremos todo lo posible por ayudarte."
+            }
+        ];
+
+        // Render FAQ
+        function renderFAQ() {
+            const faqContainer = document.getElementById('faqContainer');
+            faqContainer.innerHTML = '';
+
+            faqData.forEach((faq, index) => {
+                const faqItem = document.createElement('div');
+                faqItem.className = 'faq-item';
+                faqItem.innerHTML = `
+                    <div class="faq-question" style="color: #1e293b;">
+                        <span>${faq.question}</span>
+                        <span class="faq-icon">+</span>
+                    </div>
+                    <div class="faq-answer">${faq.answer}</div>
+                `;
+
+                faqItem.addEventListener('click', () => {
+                    const wasActive = faqItem.classList.contains('active');
+                    document.querySelectorAll('.faq-item').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    if (!wasActive) {
+                        faqItem.classList.add('active');
+                    }
+                });
+
+                faqContainer.appendChild(faqItem);
+            });
+        }
+
+        // Function to remove accents
+        function removeAccents(str) {
+            return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        const searchArrow = document.getElementById('searchArrow');
+        
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = removeAccents(e.target.value.toLowerCase().trim());
+            const faqContainer = document.getElementById('faqContainer');
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            // Remove previous "no results" message
+            const existingNoResults = document.getElementById('noResultsMessage');
+            if (existingNoResults) {
+                existingNoResults.remove();
+            }
+
+            // If search is empty, hide arrow and show all items
+            if (searchTerm === '') {
+                searchArrow.classList.remove('show');
+                faqItems.forEach(item => {
+                    item.style.display = 'block';
+                });
+                return;
+            }
+
+            // Show arrow when user types
+            searchArrow.classList.add('show');
+
+            // Split search term into individual words
+            const searchWords = searchTerm.split(/\s+/).filter(word => word.length > 0);
+            let visibleCount = 0;
+
+            faqItems.forEach(item => {
+                const question = removeAccents(item.querySelector('.faq-question span').textContent.toLowerCase());
+                const answer = removeAccents(item.querySelector('.faq-answer').textContent.toLowerCase());
+                const fullText = question + ' ' + answer;
+
+                // Check if any search word matches
+                const matches = searchWords.some(word => fullText.includes(word));
+
+                if (matches) {
+                    item.style.display = 'block';
+                    visibleCount++;
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+
+            // Show "no results" message if nothing found
+            if (visibleCount === 0) {
+                const noResults = document.createElement('div');
+                noResults.id = 'noResultsMessage';
+                noResults.className = 'no-results';
+                noResults.innerHTML = `
+                    <div style="font-size: 48px; margin-bottom: 16px;">���</div>
+                    <h3 style="color: #1e293b; font-size: 20px; margin-bottom: 8px; font-weight: 600;">No encontramos resultados para "${e.target.value}"</h3>
+                    <p style="color: #64748b; margin-bottom: 20px;">Intenta con otras palabras o revisa todas las preguntas frecuentes</p>
+                    <button id="clearSearch" style="background: linear-gradient(135deg, #ec4899 0%, #7c3aed 100%); color: white; border: none; padding: 12px 24px; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s ease;">
+                        Ver todas las preguntas
+                    </button>
+                `;
+                faqContainer.insertBefore(noResults, faqContainer.firstChild);
+
+                // Add hover effect to clear search button
+                const clearBtn = document.getElementById('clearSearch');
+                clearBtn.addEventListener('mouseenter', () => {
+                    clearBtn.style.transform = 'translateY(-2px)';
+                    clearBtn.style.boxShadow = '0 8px 20px rgba(236, 72, 153, 0.3)';
+                });
+                clearBtn.addEventListener('mouseleave', () => {
+                    clearBtn.style.transform = 'translateY(0)';
+                    clearBtn.style.boxShadow = 'none';
+                });
+
+                // Add click event to clear search button
+                clearBtn.addEventListener('click', () => {
+                    searchInput.value = '';
+                    faqItems.forEach(item => item.style.display = 'block');
+                    noResults.remove();
+                });
+            } else {
+                // Show results count
+                const resultsInfo = document.createElement('div');
+                resultsInfo.id = 'noResultsMessage';
+                resultsInfo.style.cssText = 'text-align: center; padding: 16px; margin-bottom: 20px; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);';
+                resultsInfo.innerHTML = `
+                    <p style="color: #64748b; font-size: 16px;">
+                        Se encontraron <strong style="color: #ec4899;">${visibleCount}</strong> resultado${visibleCount !== 1 ? 's' : ''} para "<strong>${e.target.value}</strong>"
+                    </p>
+                `;
+                faqContainer.insertBefore(resultsInfo, faqContainer.firstChild);
+            }
+        });
+
+        // Toast notification
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show';
+            if (isError) {
+                toast.classList.add('error');
+            }
+
+            setTimeout(() => {
+                toast.className = 'toast';
+            }, 3000);
+        }
+
+        // Form submission with EmailJS
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const submitBtn = document.getElementById('submitBtn');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+
+            try {
+                const templateParams = {
+                    name: document.getElementById('name').value,
+                    email: document.getElementById('email').value,
+                    subject: document.getElementById('subject').value,
+                    message: document.getElementById('message').value
+                };
+
+                const response = await emailjs.send(
+                    'service_3ovubse',
+                    'template_dengztn',
+                    templateParams
+                );
+
+                if (response.status === 200) {
+                    showToast('¡Mensaje enviado con éxito! Te responderemos pronto a contact@guyamode.com');
+                    contactForm.reset();
+                } else {
+                    showToast('Error al enviar el mensaje. Por favor, intenta de nuevo.', true);
+                }
+            } catch (error) {
+                console.error('EmailJS Error:', error);
+                showToast('Error al enviar el mensaje. Por favor, intenta de nuevo.', true);
+            }
+
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Enviar Mensaje';
+        });
+
+        // Initialize
+        renderFAQ();
+
+        if (window.elementSdk && window.elementSdk.config) {
+            onConfigChange(window.elementSdk.config);
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aaedce2929cc29c',t:'MTc2NTIyNDE3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
