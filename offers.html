@@ -1,0 +1,899 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuyaMode - Ofertas Especiales</title>
+  <link rel="icon" type="image/x-icon" href="https://guyamode.com/favicon.ico">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 50%, #f59e0b 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+            animation: pulse 4s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.1);
+                opacity: 0.8;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: linear-gradient(135deg, #dc2626 0%, #f59e0b 100%);
+            color: #ffffff;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4);
+            z-index: 10;
+            animation: shake 2s infinite;
+        }
+
+        @keyframes shake {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+            25% {
+                transform: rotate(-5deg);
+            }
+            75% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .product-card {
+            background-color: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .product-card:hover {
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.15);
+            transform: translateY(-8px);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 280px;
+            background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .product-card:hover .product-image::after {
+            left: 100%;
+        }
+
+        .product-info {
+            padding: 20px;
+        }
+
+        .product-name {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #1e293b;
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+
+        .price-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .original-price {
+            font-size: 16px;
+            color: #94a3b8;
+            text-decoration: line-through;
+        }
+
+        .sale-price {
+            font-size: 24px;
+            font-weight: 900;
+            color: #dc2626;
+        }
+
+        .savings {
+            background-color: #fef2f2;
+            color: #dc2626;
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .cta-button {
+            width: 100%;
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.3);
+        }
+
+        .timer-section {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            padding: 32px 0;
+            color: #ffffff;
+        }
+
+        .timer-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+        }
+
+        .timer-number {
+            font-size: 48px;
+            font-weight: 900;
+            display: block;
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+
+        .timer-label {
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        .category-pill {
+            display: inline-block;
+            padding: 8px 20px;
+            background-color: #ffffff;
+            border-radius: 50px;
+            margin: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #1e293b;
+            border: 2px solid transparent;
+        }
+
+        .category-pill:hover {
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .category-pill.active {
+            background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+            color: #ffffff;
+            border-color: #ffffff;
+        }
+
+        .flash-banner {
+            background: linear-gradient(90deg, #fbbf24, #f59e0b, #fbbf24);
+            background-size: 200% 100%;
+            animation: shimmer 3s infinite;
+            padding: 20px;
+            text-align: center;
+            font-weight: 900;
+            font-size: 24px;
+            color: #1e293b;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1999;
+        }
+
+        .cart-overlay.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 450px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: -4px 0 24px rgba(0, 0, 0, 0.2);
+            transition: right 0.3s ease;
+            z-index: 2000;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .cart-item-info {
+            flex: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .cart-item-price {
+            color: #dc2626;
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+        }
+
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            border: 2px solid #e5e7eb;
+            background-color: #ffffff;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+
+        .quantity-btn:hover {
+            border-color: #dc2626;
+            color: #dc2626;
+            background-color: #fef2f2;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+            transition: color 0.3s ease;
+        }
+
+        .remove-btn:hover {
+            color: #dc2626;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 60px 24px;
+            color: #64748b;
+        }
+
+        .empty-cart-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .timer-number {
+                font-size: 32px;
+            }
+
+            .flash-banner {
+                font-size: 18px;
+            }
+
+            .product-image {
+                height: 220px;
+                font-size: 60px;
+            }
+
+            .cart-sidebar {
+                width: 100%;
+                right: -100%;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="w-full h-full">
+  <div class="w-full min-h-full flex flex-col" style="background-color: #f8fafc;"><!-- Navigation -->
+   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3"><a href="https://guyamode.com" style="text-decoration: none;"> <img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 60px;" onerror="this.style.display='none'; this.alt='Logo no disponible';"> </a>
+      </div>
+      <div class="flex-1 flex justify-center">
+       <div class="hidden md:flex gap-8 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none; font-weight: 600;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none; font-weight: 600;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none; font-weight: 600;">Contacto</a>
+       </div>
+      </div><button id="cartButton" style="background: linear-gradient(135deg, #ea580c 0%, #f59e0b 100%); border: none; cursor: pointer; padding: 10px 20px; border-radius: 8px; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"> <img src="https://guyamode.com/Carrito.png" alt="Carrito" style="height: 24px; width: 24px;" onerror="this.outerHTML='<span style=\'font-size: 24px;\'>🛒</span>';"> <span id="cartCount" style="color: white; font-size: 16px; font-weight: 700;">(<span id="cartNumber">0</span>)</span> </button>
+     </div>
+    </nav>
+   </header><!-- Flash Banner -->
+   <div class="flash-banner" id="flashBanner">
+    ¡Hasta 70% de descuento! 🔥
+   </div><!-- Main Content -->
+   <main class="flex-1 w-full overflow-auto"><!-- Hero Section -->
+    <section class="hero-section w-full py-20 md:py-32">
+     <div class="hero-content max-w-7xl mx-auto px-4 md:px-6 text-center">
+      <h1 id="page-title" class="text-5xl md:text-7xl font-black mb-6" style="color: #ffffff; text-shadow: 0 4px 20px rgba(0,0,0,0.3);">Ofertas Increíbles</h1>
+      <p id="page-subtitle" class="text-xl md:text-2xl max-w-3xl mx-auto mb-12" style="color: #fef3c7;">Aprovecha nuestros descuentos especiales por tiempo limitado</p><!-- Timer Countdown -->
+      <div class="grid grid-cols-4 gap-4 max-w-2xl mx-auto">
+       <div class="timer-box"><span id="days" class="timer-number">02</span> <span class="timer-label">Días</span>
+       </div>
+       <div class="timer-box"><span id="hours" class="timer-number">14</span> <span class="timer-label">Horas</span>
+       </div>
+       <div class="timer-box"><span id="minutes" class="timer-number">32</span> <span class="timer-label">Minutos</span>
+       </div>
+       <div class="timer-box"><span id="seconds" class="timer-number">45</span> <span class="timer-label">Segundos</span>
+       </div>
+      </div>
+     </div>
+    </section><!-- Category Filter -->
+    <section class="w-full py-12" style="background-color: #ffffff;">
+     <div class="max-w-7xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-2xl md:text-3xl font-black mb-8" style="color: #1e293b;">Filtrar por Categoría</h2>
+      <div><span class="category-pill active" data-category="all">Todas</span> <span class="category-pill" data-category="clothing">Ropa</span> <span class="category-pill" data-category="accessories">Accesorios</span> <span class="category-pill" data-category="shoes">Calzado</span> <span class="category-pill" data-category="bags">Bolsos</span>
+      </div>
+     </div>
+    </section><!-- Products Grid -->
+    <section class="w-full py-20" style="background-color: #f8fafc;">
+     <div class="max-w-7xl mx-auto px-4 md:px-6">
+      <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8"><!-- Products will be rendered here -->
+      </div>
+     </div>
+    </section><!-- Newsletter Section -->
+    <section class="w-full py-20" style="background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);">
+     <div class="max-w-4xl mx-auto px-4 md:px-6 text-center">
+      <h2 class="text-3xl md:text-4xl font-black mb-4" style="color: #ffffff;">¡No te pierdas nuestras ofertas!</h2>
+      <p class="text-lg md:text-xl mb-8" style="color: #fef3c7;">Suscríbete y recibe un 15% extra en tu primera compra</p>
+      <div class="flex flex-col md:flex-row gap-4 max-w-md mx-auto"><input type="email" id="newsletterEmail" placeholder="tu@email.com" style="flex: 1; padding: 16px 24px; border: none; border-radius: 50px; font-size: 16px;"> <button id="subscribeBtn" style="padding: 16px 32px; background-color: #1e293b; color: #ffffff; border: none; border-radius: 50px; font-size: 16px; font-weight: 700; cursor: pointer; white-space: nowrap; transition: all 0.3s ease;" onmouseenter="this.style.transform='scale(1.05)'" onmouseleave="this.style.transform='scale(1)'"> Suscribirme </button>
+      </div>
+     </div>
+    </section>
+   </main><!-- Footer -->
+   <footer class="w-full py-12" style="background-color: #1e293b;">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1"><img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 50px;" onerror="this.style.display='none'; this.alt='GuyaMode';">
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Compra</h5>
+       <ul class="space-y-2" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/news" class="hover:opacity-80">Nuevos Llegados</a></li>
+        <li><a href="https://guyamode.com/offers" class="hover:opacity-80">Ofertas</a></li>
+        <li><a href="https://guyamode.com/catalogue" class="hover:opacity-80">Más Vendidos</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Ayuda</h5>
+       <ul class="space-y-2" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/faq" class="hover:opacity-80">FAQ</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Envíos</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Devoluciones</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Síguenos</h5>
+       <div class="flex gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+           <lineargradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FD5949;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#D6249F;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#285AEB;stop-opacity:1" />
+           </lineargradient>
+          </defs> <rect width="36" height="36" rx="8" fill="url(#ig-grad)" /> <rect x="11" y="11" width="14" height="14" rx="3.5" stroke="white" stroke-width="2" fill="none" /> <circle cx="18" cy="18" r="4" stroke="white" stroke-width="2" fill="none" /> <circle cx="23.5" cy="12.5" r="1.2" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1DA1F2" /> <path d="M26 12.8c-.6.3-1.2.4-1.9.5.7-.4 1.2-1 1.4-1.8-.6.4-1.3.6-2.1.8-.6-.6-1.5-1-2.4-1-1.7 0-3.2 1.5-3.2 3.3 0 .3 0 .5.1.7-2.7-.1-5.2-1.4-6.8-3.4-.3.5-.4 1-.4 1.7 0 1.1.6 2.1 1.5 2.7-.5 0-1-.2-1.5-.4 0 1.6 1.1 2.9 2.6 3.2-.3.1-.6.1-.9.1-.2 0-.4 0-.6-.1.4 1.3 1.6 2.3 3.1 2.3-1.1.9-2.5 1.4-4.1 1.4H10c1.5.9 3.2 1.5 5 1.5 6 0 9.3-5 9.3-9.3v-.4c.7-.5 1.3-1.1 1.7-1.8z" fill="white" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="text-center pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
+      <p class="text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
+     </div>
+    </div>
+   </footer><!-- Toast Notification -->
+   <div id="toast" style="position: fixed; bottom: 24px; right: 24px; background-color: #10b981; color: #ffffff; padding: 16px 24px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1000;"></div><!-- Cart Overlay -->
+   <div class="cart-overlay" id="cartOverlay"></div><!-- Cart Sidebar -->
+   <aside class="cart-sidebar" id="cartSidebar">
+    <div class="p-6">
+     <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b; background: none; border: none; cursor: pointer; transition: color 0.3s ease;" onmouseover="this.style.color='#1e293b'" onmouseout="this.style.color='#64748b'">×</button>
+     </div>
+     <div id="cartItems" class="mb-6"><!-- Cart items will be inserted here -->
+     </div>
+     <div class="border-t pt-4" style="border-color: #e5e7eb;">
+      <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #dc2626;">$0.00</span>
+      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%); color: #ffffff; border: none; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"> Proceder al Pago </button>
+      <p class="text-center text-sm mt-4" style="color: #64748b;">La pasarela de pagos se integrará próximamente</p>
+     </div>
+    </div>
+   </aside>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "Ofertas Increíbles",
+            page_subtitle: "Aprovecha nuestros descuentos especiales por tiempo limitado",
+            banner_text: "¡Hasta 70% de descuento! 🔥",
+            cta_button_text: "Agregar al carrito",
+            background_color: "#f8fafc",
+            surface_color: "#ffffff",
+            text_color: "#1e293b",
+            primary_action_color: "#dc2626",
+            secondary_action_color: "#ea580c",
+            font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+            font_size: 16
+        };
+
+        async function onConfigChange(config) {
+            const pageTitle = config.page_title || defaultConfig.page_title;
+            const pageSubtitle = config.page_subtitle || defaultConfig.page_subtitle;
+            const bannerText = config.banner_text || defaultConfig.banner_text;
+            
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
+
+            // Update text content
+            const pageTitleElem = document.getElementById('page-title');
+            const pageSubtitleElem = document.getElementById('page-subtitle');
+            const flashBannerElem = document.getElementById('flashBanner');
+
+            if (pageTitleElem) {
+                pageTitleElem.textContent = pageTitle;
+                pageTitleElem.style.fontFamily = baseFontStack;
+                pageTitleElem.style.fontSize = `${fontSize * 4.375}px`;
+            }
+
+            if (pageSubtitleElem) {
+                pageSubtitleElem.textContent = pageSubtitle;
+                pageSubtitleElem.style.fontFamily = baseFontStack;
+                pageSubtitleElem.style.fontSize = `${fontSize * 1.5}px`;
+            }
+
+            if (flashBannerElem) {
+                flashBannerElem.textContent = bannerText;
+                flashBannerElem.style.fontFamily = baseFontStack;
+                flashBannerElem.style.fontSize = `${fontSize * 1.5}px`;
+            }
+
+            // Update colors
+            document.body.style.backgroundColor = backgroundColor;
+
+            const ctaButtons = document.querySelectorAll('.cta-button');
+            ctaButtons.forEach(btn => {
+                btn.style.background = `linear-gradient(135deg, ${primaryActionColor} 0%, ${config.secondary_action_color || defaultConfig.secondary_action_color} 100%)`;
+                btn.style.fontFamily = baseFontStack;
+            });
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["page_subtitle", config.page_subtitle || defaultConfig.page_subtitle],
+                ["banner_text", config.banner_text || defaultConfig.banner_text],
+                ["cta_button_text", config.cta_button_text || defaultConfig.cta_button_text]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Products Data
+        const productsData = [
+            { id: 1, name: "Vestido Floral Verano", emoji: "👗", image: "https://guyamode.com/ofertaimagen1.jpg", category: "clothing", originalPrice: 89.99, salePrice: 26.99, discount: 70 },
+            { id: 2, name: "Reloj Elegante", emoji: "⌚", image: "https://guyamode.com/ofertaimagen2.jpg", category: "accessories", originalPrice: 199.99, salePrice: 99.99, discount: 50 },
+            { id: 3, name: "Zapatillas Deportivas", emoji: "👟", image: "https://guyamode.com/ofertaimagen3.jpg", category: "shoes", originalPrice: 129.99, salePrice: 64.99, discount: 50 },
+            { id: 4, name: "Bolso de Cuero", emoji: "👜", image: "https://guyamode.com/ofertaimagen4.jpg", category: "bags", originalPrice: 149.99, salePrice: 74.99, discount: 50 },
+            { id: 5, name: "Camisa Casual", emoji: "👔", image: "https://guyamode.com/ofertaimagen5.jpg", category: "clothing", originalPrice: 59.99, salePrice: 23.99, discount: 60 },
+            { id: 6, name: "Gafas de Sol", emoji: "🕶️", image: "https://guyamode.com/ofertaimagen6.jpg", category: "accessories", originalPrice: 79.99, salePrice: 31.99, discount: 60 },
+            { id: 7, name: "Botas de Invierno", emoji: "🥾", image: "https://guyamode.com/ofertaimagen7.jpg", category: "shoes", originalPrice: 169.99, salePrice: 84.99, discount: 50 },
+            { id: 8, name: "Mochila Urbana", emoji: "🎒", image: "https://guyamode.com/ofertaimagen8.jpg", category: "bags", originalPrice: 99.99, salePrice: 39.99, discount: 60 },
+            { id: 9, name: "Chaqueta de Cuero", emoji: "🧥", image: "https://guyamode.com/ofertaimagen9.jpg", category: "clothing", originalPrice: 249.99, salePrice: 124.99, discount: 50 },
+            { id: 10, name: "Collar de Plata", emoji: "📿", image: "https://guyamode.com/ofertaimagen10.jpg", category: "accessories", originalPrice: 119.99, salePrice: 35.99, discount: 70 },
+            { id: 11, name: "Sandalias Verano", emoji: "👡", image: "https://guyamode.com/ofertaimagen11.jpg", category: "shoes", originalPrice: 69.99, salePrice: 27.99, discount: 60 },
+            { id: 12, name: "Cartera Minimalista", emoji: "👝", image: "https://guyamode.com/ofertaimagen12.jpg", category: "bags", originalPrice: 49.99, salePrice: 19.99, discount: 60 }
+        ];
+
+        let currentCategory = 'all';
+        let cart = [];
+
+        // Render Products
+        function renderProducts() {
+            const productsGrid = document.getElementById('productsGrid');
+            productsGrid.innerHTML = '';
+
+            const filteredProducts = currentCategory === 'all' 
+                ? productsData 
+                : productsData.filter(p => p.category === currentCategory);
+
+            filteredProducts.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <div class="discount-badge">-${product.discount}%</div>
+                    <div class="product-image">
+                        <img src="${product.image}" alt="${product.name}" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='${product.emoji}'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.fontSize='80px';">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">${product.name}</h3>
+                        <div class="price-section">
+                            <span class="original-price">$${product.originalPrice.toFixed(2)}</span>
+                            <span class="sale-price">$${product.salePrice.toFixed(2)}</span>
+                        </div>
+                        <div class="savings">Ahorras $${(product.originalPrice - product.salePrice).toFixed(2)}</div>
+                        <button class="cta-button" data-product="${product.name}">
+                            ${defaultConfig.cta_button_text}
+                        </button>
+                    </div>
+                `;
+
+                const button = card.querySelector('.cta-button');
+                button.addEventListener('click', () => {
+                    addToCart(product);
+                    showToast(`"${product.name}" añadido al carrito 🛒`);
+                });
+
+                productsGrid.appendChild(card);
+            });
+        }
+
+        // Category Filter
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            pill.addEventListener('click', () => {
+                document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+                pill.classList.add('active');
+                currentCategory = pill.dataset.category;
+                renderProducts();
+            });
+        });
+
+        // Countdown Timer
+        function updateTimer() {
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 2);
+            endDate.setHours(endDate.getHours() + 14);
+            endDate.setMinutes(endDate.getMinutes() + 32);
+            endDate.setSeconds(endDate.getSeconds() + 45);
+
+            setInterval(() => {
+                const now = new Date().getTime();
+                const distance = endDate - now;
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }, 1000);
+        }
+
+        // Newsletter Subscription
+        document.getElementById('subscribeBtn').addEventListener('click', () => {
+            const email = document.getElementById('newsletterEmail').value;
+            if (email && email.includes('@')) {
+                // Simular envío al boletín de ofertas
+                showToast('¡Suscripción exitosa! Recibirás nuestras mejores ofertas 🎉');
+                document.getElementById('newsletterEmail').value = '';
+                
+                // En una implementación real, aquí se enviaría el email al backend
+                // fetch('/api/newsletter', { method: 'POST', body: JSON.stringify({ email }) })
+            } else {
+                showToast('Por favor, ingresa un email válido', true);
+            }
+        });
+
+        // Toast notification
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.backgroundColor = isError ? '#ef4444' : '#10b981';
+            toast.style.transform = 'translateY(0)';
+            toast.style.opacity = '1';
+
+            setTimeout(() => {
+                toast.style.transform = 'translateY(100px)';
+                toast.style.opacity = '0';
+            }, 3000);
+        }
+
+        // Cart Functions
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.id === product.id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            updateCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        function updateQuantity(productId, change) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += change;
+                if (item.quantity <= 0) {
+                    removeFromCart(productId);
+                } else {
+                    updateCart();
+                }
+            }
+        }
+
+        function updateCart() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartTotal = document.getElementById('cartSubtotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.salePrice * item.quantity), 0);
+
+            // Update cart count
+            const cartNumber = document.getElementById('cartNumber');
+            if (cartNumber) {
+                cartNumber.textContent = totalItems;
+            }
+
+            // Update cart total
+            cartTotal.textContent = `$${totalPrice.toFixed(2)}`;
+
+            // Render cart items
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="empty-cart">
+                        <div class="empty-cart-icon">🛒</div>
+                        <h3 style="font-size: 20px; font-weight: 400; color: #1e293b; margin-bottom: 8px;">Tu carrito está vacío</h3>
+                    </div>
+                `;
+            } else {
+                cartItemsContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-image" onerror="this.style.display='none'; this.outerHTML='<div class=\\'cart-item-image\\'>${item.emoji}</div>';">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.salePrice.toFixed(2)}</div>
+                            <div class="cart-item-quantity">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">−</button>
+                                <span style="font-weight: 600; color: #1e293b; min-width: 30px; text-align: center;">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                        </div>
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">×</button>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Cart Modal Controls
+        document.getElementById('cartButton').addEventListener('click', () => {
+            document.getElementById('cartSidebar').classList.add('open');
+            document.getElementById('cartOverlay').classList.add('open');
+        });
+
+        document.getElementById('closeCart').addEventListener('click', () => {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('open');
+        });
+
+        document.getElementById('cartOverlay').addEventListener('click', () => {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('open');
+        });
+
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            if (cart.length > 0) {
+                showToast('Redirigiendo al proceso de pago... 💳');
+                setTimeout(() => {
+                    window.open('https://guyamode.com/checkout', '_blank', 'noopener,noreferrer');
+                }, 500);
+            }
+        });
+
+        // Make functions globally accessible
+        window.addToCart = addToCart;
+        window.removeFromCart = removeFromCart;
+        window.updateQuantity = updateQuantity;
+
+        // Initialize
+        renderProducts();
+        updateTimer();
+        updateCart();
+
+        if (window.elementSdk && window.elementSdk.config) {
+            onConfigChange(window.elementSdk.config);
+        }
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aaeed5a964ac29c',t:'MTc2NTIyNDg0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
