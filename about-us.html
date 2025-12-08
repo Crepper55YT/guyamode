@@ -3,8 +3,8 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GuyaMode - About Us</title>
-  <link rel="icon" type="image/x-icon" href="https://guyamode.com/favicon.ico">
+  <title>GuyaMode - Moda Internacional</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <script src="/_sdk/element_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
@@ -19,10 +19,6 @@
             width: 100%;
         }
 
-        .hero-gradient {
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-        }
-
         .product-card {
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
@@ -32,23 +28,20 @@
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
         }
 
-        .btn-primary {
+        .btn-add-cart {
             transition: all 0.3s ease;
         }
 
-        .btn-primary:hover {
+        .btn-add-cart:hover {
             transform: scale(1.05);
-        }
-
-        .category-badge {
-            backdrop-filter: blur(10px);
         }
 
         .cart-sidebar {
             position: fixed;
             top: 0;
             right: -100%;
-            width: 400px;
+            width: 100%;
+            max-width: 400px;
             height: 100%;
             background-color: #ffffff;
             box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
@@ -124,8 +117,18 @@
             background-color: #f3f4f6;
         }
 
-        .about-section {
-            display: block;
+        @media (max-width: 768px) {
+            nav .nav-links {
+                display: none;
+            }
+            
+            nav img {
+                height: 50px !important;
+            }
+            
+            .cart-sidebar {
+                width: 100%;
+            }
         }
     </style>
   <style>@view-transition { navigation: auto; }</style>
@@ -144,125 +147,88 @@
      <div class="border-t pt-4" style="border-color: #e5e7eb;">
       <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #e94560;">$0.00</span>
       </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background-color: #e94560; color: #ffffff;"> Proceder al Pago </button>
-      <p class="text-center text-sm mt-4" style="color: #64748b;">La pasarela de pagos se integrará próximamente</p>
+      <p class="text-center text-sm mt-4" style="color: #64748b;">La pasarela de pagos se integrar�� próximamente</p>
      </div>
     </div>
    </aside><!-- Header -->
    <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <nav class="max-w-7xl mx-auto px-6 py-4">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
      <div class="flex justify-between items-center">
-      <div class="flex items-center gap-3"><img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none';">
+      <div class="flex items-center gap-3"><a href="https://guyamode.com"> <img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none'; console.log('Error loading logo');"> </a>
       </div>
-      <div class="flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogo" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Catálogo</a> <a href="https://guyamode.com/contacto" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
-      </div><button id="cartBtn" class="px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff;"> <img src="https://guyamode.com/carrito.png" alt="Carrito" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.style.display='none'; const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('width', '24'); svg.setAttribute('height', '24'); svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none'); svg.innerHTML = '<path d=\'M9 2L7.17 4H3C1.9 4 1 4.9 1 6V20C1 21.1 1.9 22 3 22H21C22.1 22 23 21.1 23 20V6C23 4.9 22.1 4 21 4H16.83L15 2H9Z\' fill=\'currentColor\' opacity=\'0.3\'/><circle cx=\'12\' cy=\'13\' r=\'4\' fill=\'currentColor\'/>';  this.parentNode.insertBefore(svg, this.nextSibling);"> <span id="cartCount">(0)</span> </button>
+      <div class="nav-links flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Catálogo</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
+      </div><button id="cartBtn" class="px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff;"> <img src="assets/Carrito.png" alt="Carrito" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.style.display='none'; console.log('Error loading cart icon');"> <span id="cartCount" class="hidden md:inline">(0)</span> <span class="cart-badge" id="cartBadge" style="display: none;">0</span> </button>
      </div>
     </nav>
    </header><!-- Hero Section -->
-   <section class="w-full hero-gradient py-20">
-    <div class="max-w-7xl mx-auto px-6 text-center">
-     <h2 id="hero-title" class="text-5xl font-bold mb-4" style="color: #ffffff;">Nueva Colección 2024</h2>
-     <p id="hero-subtitle" class="text-xl mb-8" style="color: #cbd5e1;">Descubre las últimas tendencias inspiradas en las pasarelas internacionales</p><a href="https://guyamode.com/catalogo" id="cta-button" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-block" style="background-color: #e94560; color: #ffffff; text-decoration: none;"> Ver Catálogo Completo </a>
+   <section class="w-full py-16 md:py-24" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 text-center"><img src="assets/logo1.png" alt="GuyaMode" style="height: 120px; width: auto; margin: 0 auto 24px; display: block;" onerror="this.style.display='none';">
+     <h2 id="hero-title" class="text-3xl md:text-4xl font-bold mb-4" style="color: #ffffff !important;">Nueva Colección 2024</h2>
+     <p id="hero-subtitle" class="text-base md:text-lg max-w-3xl mx-auto mb-8" style="color: #cbd5e1;">Descubre las últimas tendencias inspiradas en las pasarelas internacionales</p><a href="https://guyamode.com/catalogue" style="text-decoration: none;"> <button id="catalog-btn" class="px-8 py-3 rounded-lg font-semibold text-lg" style="background-color: #e94560; color: #ffffff; border: none; cursor: pointer; transition: all 0.3s ease;"> Ver catálogo completo </button> </a>
     </div>
-   </section><!-- About Section -->
-   <section id="aboutSection" class="w-full py-16" style="background-color: #ffffff;">
-    <div class="max-w-7xl mx-auto px-6">
-     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-      <div>
-       <h3 class="text-4xl font-bold mb-6" style="color: #1e293b;">Acerca de GuyaMode</h3>
-       <p class="text-lg mb-4" style="color: #64748b;">En GuyaMode, creemos que la moda es un lenguaje universal que trasciende fronteras. Nos inspiramos en las tendencias más destacadas de las pasarelas internacionales para traerte piezas únicas que combinan estilo, calidad y comodidad.</p>
-       <p class="text-lg mb-4" style="color: #64748b;">Desde 2020, hemos estado comprometidos con ofrecer una experiencia de compra excepcional, seleccionando cuidadosamente cada producto para garantizar que refleje la elegancia y sofisticación que nuestros clientes merecen.</p>
-       <div class="grid grid-cols-3 gap-6 mt-8">
-        <div class="text-center">
-         <div class="text-3xl font-bold mb-2" style="color: #e94560;">
-          5K+
-         </div>
-         <div class="text-sm" style="color: #64748b;">
-          Clientes Felices
-         </div>
+   </section><!-- About Us Section -->
+   <section class="w-full py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+     <h2 id="about-title" class="text-3xl md:text-4xl font-bold text-center mb-8" style="color: #1e293b;">Acerca de GuyaMode</h2>
+     <div class="max-w-4xl mx-auto">
+      <div class="rounded-xl p-8 md:p-12 mb-8" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+       <p id="about-text-1" class="text-lg md:text-xl mb-6 leading-relaxed" style="color: #64748b;">En GuyaMode, somos apasionados por la moda internacional. Desde nuestros inicios, nos hemos dedicado a traer las últimas tendencias de las principales capitales de la moda del mundo directamente a tu armario.</p>
+       <p id="about-text-2" class="text-lg md:text-xl mb-6 leading-relaxed" style="color: #64748b;">Nuestro equipo de expertos selecciona cuidadosamente cada pieza, combinando estilo, calidad y comodidad. Creemos que la moda debe ser accesible para todos, sin comprometer la elegancia ni la sofisticación.</p>
+       <p id="about-text-3" class="text-lg md:text-xl leading-relaxed" style="color: #64748b;">Con años de experiencia en el sector textil, nos enorgullecemos de ofrecer prendas que no solo siguen las tendencias, sino que también destacan por su calidad excepcional y diseños únicos inspirados en París, Milán, Londres y Nueva York.</p>
+      </div><!-- Values Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+       <div class="rounded-xl p-6 text-center" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <div class="text-4xl mb-4">
+         ✨
         </div>
-        <div class="text-center">
-         <div class="text-3xl font-bold mb-2" style="color: #e94560;">
-          500+
-         </div>
-         <div class="text-sm" style="color: #64748b;">
-          Productos
-         </div>
+        <h3 class="text-xl font-bold mb-2" style="color: #1e293b;">Calidad Premium</h3>
+        <p style="color: #64748b;">Seleccionamos los mejores materiales y acabados para cada prenda</p>
+       </div>
+       <div class="rounded-xl p-6 text-center" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <div class="text-4xl mb-4">
+         🌍
         </div>
-        <div class="text-center">
-         <div class="text-3xl font-bold mb-2" style="color: #e94560;">
-          15+
-         </div>
-         <div class="text-sm" style="color: #64748b;">
-          Países
-         </div>
+        <h3 class="text-xl font-bold mb-2" style="color: #1e293b;">Tendencias Globales</h3>
+        <p style="color: #64748b;">Inspiración directa de las pasarelas internacionales más prestigiosas</p>
+       </div>
+       <div class="rounded-xl p-6 text-center" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <div class="text-4xl mb-4">
+         💎
         </div>
+        <h3 class="text-xl font-bold mb-2" style="color: #1e293b;">Estilo Único</h3>
+        <p style="color: #64748b;">Diseños exclusivos que te hacen destacar con elegancia</p>
        </div>
-      </div>
-      <div class="grid grid-cols-2 gap-4">
-       <div class="rounded-xl overflow-hidden" style="height: 250px;"><img src="https://guyamode.com/1.png" alt="Brillo y elegancia" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>✨</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';">
-       </div>
-       <div class="rounded-xl overflow-hidden" style="height: 250px;"><img src="https://guyamode.com/2.png" alt="Moda y estilo" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>👗</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';">
-       </div>
-       <div class="rounded-xl overflow-hidden" style="height: 250px;"><img src="https://guyamode.com/3.png" alt="Alcance global" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>🌍</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)';">
-       </div>
-       <div class="rounded-xl overflow-hidden" style="height: 250px;"><img src="https://guyamode.com/4.png" alt="Calidad premium" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>💎</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';">
-       </div>
-      </div>
-     </div><!-- Mission & Values -->
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
-      <div class="text-center p-6 rounded-xl" style="background-color: #f8f9fa;">
-       <div class="text-5xl mb-4">
-        🎯
-       </div>
-       <h4 class="text-xl font-bold mb-3" style="color: #1e293b;">Nuestra Misión</h4>
-       <p class="text-sm" style="color: #64748b;">Hacer accesible la moda internacional de calidad, inspirando confianza y estilo en cada uno de nuestros clientes.</p>
-      </div>
-      <div class="text-center p-6 rounded-xl" style="background-color: #f8f9fa;">
-       <div class="text-5xl mb-4">
-        💫
-       </div>
-       <h4 class="text-xl font-bold mb-3" style="color: #1e293b;">Calidad Premium</h4>
-       <p class="text-sm" style="color: #64748b;">Seleccionamos cuidadosamente cada pieza, garantizando materiales de primera calidad y acabados impecables.</p>
-      </div>
-      <div class="text-center p-6 rounded-xl" style="background-color: #f8f9fa;">
-       <div class="text-5xl mb-4">
-        🌟
-       </div>
-       <h4 class="text-xl font-bold mb-3" style="color: #1e293b;">Estilo Global</h4>
-       <p class="text-sm" style="color: #64748b;">Nos inspiramos en las mejores tendencias de París, Milán, Nueva York y Tokio para crear tu look perfecto.</p>
       </div>
      </div>
     </div>
    </section><!-- Footer -->
-   <footer id="contacto" class="w-full py-12" style="background-color: #1e293b;">
-    <div class="max-w-7xl mx-auto px-6">
-     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
-      <div>
-       <h4 class="text-xl font-bold mb-4" style="color: #2563eb;">GuyaMode</h4>
-       <p class="text-sm" style="color: #cbd5e1;">Estilo internacional a tu alcance. Moda inspirada en las mejores tendencias del mundo.</p>
+   <footer class="w-full py-8 md:py-12" style="background-color: #1e293b;">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
+      <div class="col-span-2 md:col-span-1"><img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 50px; width: auto; object-fit: contain;" onerror="this.style.display='none';">
       </div>
       <div>
-       <h5 class="font-semibold mb-4" style="color: #ffffff;">Compra</h5>
-       <ul class="space-y-2 text-sm" style="color: #cbd5e1;">
-        <li><a href="https://guyamode.com/catalogo" class="hover:opacity-80">Catálogo</a></li>
-        <li><a href="#" class="hover:opacity-80">Ofertas</a></li>
-        <li><a href="#" class="hover:opacity-80">Más Vendidos</a></li>
+       <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Compra</h5>
+       <ul class="space-y-2 text-xs md:text-sm" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/news" class="hover:opacity-80">Nuevos Llegados</a></li>
+        <li><a href="https://guyamode.com/offers" class="hover:opacity-80">Ofertas</a></li>
+        <li><a href="https://guyamode.com/catalogue" class="hover:opacity-80">Más Vendidos</a></li>
        </ul>
       </div>
       <div>
-       <h5 class="font-semibold mb-4" style="color: #ffffff;">Ayuda</h5>
-       <ul class="space-y-2 text-sm" style="color: #cbd5e1;">
-        <li><a href="#" class="hover:opacity-80">FAQ</a></li>
-        <li><a href="#" class="hover:opacity-80">Envíos</a></li>
-        <li><a href="#" class="hover:opacity-80">Devoluciones</a></li>
+       <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Ayuda</h5>
+       <ul class="space-y-2 text-xs md:text-sm" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/faq" class="hover:opacity-80">FAQ</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Envíos</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Devoluciones</a></li>
        </ul>
       </div>
       <div>
-       <h5 class="font-semibold mb-4" style="color: #ffffff;">Síguenos</h5>
-       <div class="flex gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
-         <svg width="36" height="36" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
+       <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Síguenos</h5>
+       <div class="flex gap-3 md:gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
          </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
-         <svg width="36" height="36" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
            <lineargradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
             <stop offset="0%" style="stop-color:#FD5949;stop-opacity:1" />
             <stop offset="50%" style="stop-color:#D6249F;stop-opacity:1" />
@@ -270,13 +236,13 @@
            </lineargradient>
           </defs> <rect width="36" height="36" rx="8" fill="url(#ig-grad)" /> <rect x="11" y="11" width="14" height="14" rx="3.5" stroke="white" stroke-width="2" fill="none" /> <circle cx="18" cy="18" r="4" stroke="white" stroke-width="2" fill="none" /> <circle cx="23.5" cy="12.5" r="1.2" fill="white" />
          </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
-         <svg width="36" height="36" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="black" /> <path d="M18 12C15.24 12 11 13.44 11 17.36V20.91C11 21.91 11.2 22.58 11.75 23.13C12.3 23.68 12.97 23.88 13.97 23.88H15V28.5L19.38 23.88H21.88C22.88 23.88 23.55 23.68 24.1 23.13C24.65 22.58 24.85 21.91 24.85 20.91V17.36C24.85 13.44 20.61 12 18 12Z" fill="#00F7EF" /> <path d="M21.3 18.86L19.21 21.86C18.98 22.19 18.65 22.36 18.3 22.36C17.95 22.36 17.62 22.19 17.39 21.86L15.3 18.86C14.94 18.38 15.06 17.71 15.54 17.35C16.02 16.99 16.69 17.11 17.05 17.59L18.3 19.27L19.55 17.59C19.91 17.11 20.58 16.99 21.06 17.35C21.54 17.71 21.66 18.38 21.3 18.86Z" fill="black" /> <path d="M22.5 13C22.5 13 24 14 24.8 16C25.6 18 26 21 25 23.5C24 26 21.5 27 18.5 27" stroke="#FF0050" stroke-width="1.8" stroke-linecap="round" />
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="black" /> <path d="M18 12C15.24 12 11 13.44 11 17.36V20.91C11 21.91 11.2 22.58 11.75 23.13C12.3 23.68 12.97 23.88 13.97 23.88H15V28.5L19.38 23.88H21.88C22.88 23.88 23.55 23.68 24.1 23.13C24.65 22.58 24.85 21.91 24.85 20.91V17.36C24.85 13.44 20.61 12 18 12Z" fill="#00F7EF" /> <path d="M21.3 18.86L19.21 21.86C18.98 22.19 18.65 22.36 18.3 22.36C17.95 22.36 17.62 22.19 17.39 21.86L15.3 18.86C14.94 18.38 15.06 17.71 15.54 17.35C16.02 16.99 16.69 17.11 17.05 17.59L18.3 19.27L19.55 17.59C19.91 17.11 20.58 16.99 21.06 17.35C21.54 17.71 21.66 18.38 21.3 18.86Z" fill="black" /> <path d="M22.5 13C22.5 13 24 14 24.8 16C25.6 18 26 21 25 23.5C24 26 21.5 27 18.5 27" stroke="#FF0050" stroke-width="1.8" stroke-linecap="round" />
          </svg></a>
        </div>
       </div>
      </div>
-     <div class="text-center pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
-      <p class="text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
+     <div class="text-center pt-6 md:pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
+      <p class="text-xs md:text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
      </div>
     </div>
    </footer>
@@ -309,7 +275,7 @@
             if (cart.length === 0) {
                 cartItems.innerHTML = `
                     <div class="text-center py-12" style="color: #64748b;">
-                        <div class="text-6xl mb-4">🛍️</div>
+                        <div class="text-6xl mb-4">🛒</div>
                         <p>Tu carrito está vacío</p>
                     </div>
                 `;
@@ -317,26 +283,40 @@
                 cartItems.innerHTML = cart.map(item => `
                     <div class="cart-item">
                         <div class="flex gap-4">
-                            <div class="w-20 h-20 rounded-lg flex items-center justify-center" style="background: ${item.gradient};">
-                                <span class="text-3xl">${item.emoji}</span>
+                            <div class="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center" style="background-color: #f3f4f6;">
+                                <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none';">
                             </div>
                             <div class="flex-1">
-                                <h5 class="font-semibold mb-1" style="color: #1e293b;">${item.name}</h5>
-                                <p class="text-sm mb-2" style="color: #64748b;">$${item.price.toFixed(2)}</p>
+                                <h5 class="font-semibold mb-1 text-sm" style="color: #1e293b;">${item.name}</h5>
+                                <p class="text-xs mb-2" style="color: #64748b;">$${item.price.toFixed(2)}</p>
                                 <div class="quantity-control">
                                     <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">−</button>
-                                    <span class="font-semibold" style="color: #1e293b;">${item.quantity}</span>
+                                    <span class="font-semibold text-sm" style="color: #1e293b;">${item.quantity}</span>
                                     <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
-                                    <button onclick="removeFromCart(${item.id})" class="text-sm ml-4" style="color: #e94560;">Eliminar</button>
+                                    <button onclick="removeFromCart(${item.id})" class="text-xs ml-2" style="color: #e94560;">Eliminar</button>
                                 </div>
                             </div>
-                            <div class="font-bold" style="color: #1e293b;">
+                            <div class="font-bold text-sm" style="color: #1e293b;">
                                 $${(item.price * item.quantity).toFixed(2)}
                             </div>
                         </div>
                     </div>
                 `).join('');
             }
+        }
+
+        // Add to Cart
+        function addToCart(id, name, price, image) {
+            const existingItem = cart.find(item => item.id === id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, image, quantity: 1 });
+            }
+            
+            updateCart();
+            openCart();
         }
 
         // Cart Actions
@@ -384,19 +364,23 @@
             setTimeout(() => message.remove(), 3000);
         });
 
-        // Initialize
+        // Initialize cart
         updateCart();
 
         // Element SDK Configuration
         const defaultConfig = {
             hero_title: "Nueva Colección 2024",
             hero_subtitle: "Descubre las últimas tendencias inspiradas en las pasarelas internacionales",
-            cta_button: "Ver Catálogo Completo",
+            catalog_btn_text: "Ver catálogo completo",
+            about_title: "Acerca de GuyaMode",
+            about_text_1: "En GuyaMode, somos apasionados por la moda internacional. Desde nuestros inicios, nos hemos dedicado a traer las últimas tendencias de las principales capitales de la moda del mundo directamente a tu armario.",
+            about_text_2: "Nuestro equipo de expertos selecciona cuidadosamente cada pieza, combinando estilo, calidad y comodidad. Creemos que la moda debe ser accesible para todos, sin comprometer la elegancia ni la sofisticación.",
+            about_text_3: "Con años de experiencia en el sector textil, nos enorgullecemos de ofrecer prendas que no solo siguen las tendencias, sino que también destacan por su calidad excepcional y diseños únicos inspirados en París, Milán, Londres y Nueva York.",
             background_color: "#f8f9fa",
             surface_color: "#ffffff",
             text_color: "#1e293b",
-            primary_action_color: "#e94560",
-            secondary_action_color: "#2563eb",
+            primary_action_color: "#2563eb",
+            secondary_action_color: "#e94560",
             font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
             font_size: 16
         };
@@ -404,7 +388,11 @@
         async function onConfigChange(config) {
             const heroTitle = config.hero_title || defaultConfig.hero_title;
             const heroSubtitle = config.hero_subtitle || defaultConfig.hero_subtitle;
-            const ctaButton = config.cta_button || defaultConfig.cta_button;
+            const catalogBtnText = config.catalog_btn_text || defaultConfig.catalog_btn_text;
+            const aboutTitle = config.about_title || defaultConfig.about_title;
+            const aboutText1 = config.about_text_1 || defaultConfig.about_text_1;
+            const aboutText2 = config.about_text_2 || defaultConfig.about_text_2;
+            const aboutText3 = config.about_text_3 || defaultConfig.about_text_3;
             
             const backgroundColor = config.background_color || defaultConfig.background_color;
             const surfaceColor = config.surface_color || defaultConfig.surface_color;
@@ -417,9 +405,21 @@
             const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
 
             // Update text content
-            document.getElementById('hero-title').textContent = heroTitle;
-            document.getElementById('hero-subtitle').textContent = heroSubtitle;
-            document.getElementById('cta-button').textContent = ctaButton;
+            const heroTitleElem = document.getElementById('hero-title');
+            const heroSubtitleElem = document.getElementById('hero-subtitle');
+            const catalogBtn = document.getElementById('catalog-btn');
+            const aboutTitleElem = document.getElementById('about-title');
+            const aboutText1Elem = document.getElementById('about-text-1');
+            const aboutText2Elem = document.getElementById('about-text-2');
+            const aboutText3Elem = document.getElementById('about-text-3');
+
+            if (heroTitleElem) heroTitleElem.textContent = heroTitle;
+            if (heroSubtitleElem) heroSubtitleElem.textContent = heroSubtitle;
+            if (catalogBtn) catalogBtn.textContent = catalogBtnText;
+            if (aboutTitleElem) aboutTitleElem.textContent = aboutTitle;
+            if (aboutText1Elem) aboutText1Elem.textContent = aboutText1;
+            if (aboutText2Elem) aboutText2Elem.textContent = aboutText2;
+            if (aboutText3Elem) aboutText3Elem.textContent = aboutText3;
 
             // Update colors
             document.body.style.backgroundColor = backgroundColor;
@@ -431,26 +431,46 @@
             navLinks.forEach(link => link.style.color = textColor);
             
             const cartBtn = document.getElementById('cartBtn');
-            if (cartBtn) cartBtn.style.backgroundColor = secondaryActionColor;
+            if (cartBtn) cartBtn.style.backgroundColor = primaryActionColor;
             
-            const ctaBtn = document.getElementById('cta-button');
-            if (ctaBtn) ctaBtn.style.backgroundColor = primaryActionColor;
-            
-            const sectionTitles = document.querySelectorAll('section h3, section h4');
-            sectionTitles.forEach(title => title.style.color = textColor);
+            if (catalogBtn) catalogBtn.style.backgroundColor = secondaryActionColor;
 
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            if (checkoutBtn) checkoutBtn.style.backgroundColor = primaryActionColor;
+            const titles = document.querySelectorAll('h2, h3');
+            titles.forEach(title => {
+                if (title.id !== 'hero-title') {
+                    title.style.color = textColor;
+                }
+            });
 
             // Update fonts
-            document.getElementById('hero-title').style.fontFamily = baseFontStack;
-            document.getElementById('hero-title').style.fontSize = `${fontSize * 3.125}px`;
+            if (heroTitleElem) {
+                heroTitleElem.style.fontFamily = baseFontStack;
+                heroTitleElem.style.fontSize = `${fontSize * 2.5}px`;
+                heroTitleElem.style.color = '#ffffff';
+            }
             
-            document.getElementById('hero-subtitle').style.fontFamily = baseFontStack;
-            document.getElementById('hero-subtitle').style.fontSize = `${fontSize * 1.25}px`;
+            if (heroSubtitleElem) {
+                heroSubtitleElem.style.fontFamily = baseFontStack;
+                heroSubtitleElem.style.fontSize = `${fontSize * 1.5}px`;
+            }
             
-            document.getElementById('cta-button').style.fontFamily = baseFontStack;
-            document.getElementById('cta-button').style.fontSize = `${fontSize * 1.125}px`;
+            if (aboutTitleElem) {
+                aboutTitleElem.style.fontFamily = baseFontStack;
+                aboutTitleElem.style.fontSize = `${fontSize * 2.25}px`;
+            }
+
+            if (aboutText1Elem) {
+                aboutText1Elem.style.fontFamily = baseFontStack;
+                aboutText1Elem.style.fontSize = `${fontSize * 1.25}px`;
+            }
+            if (aboutText2Elem) {
+                aboutText2Elem.style.fontFamily = baseFontStack;
+                aboutText2Elem.style.fontSize = `${fontSize * 1.25}px`;
+            }
+            if (aboutText3Elem) {
+                aboutText3Elem.style.fontFamily = baseFontStack;
+                aboutText3Elem.style.fontSize = `${fontSize * 1.25}px`;
+            }
         }
 
         function mapToCapabilities(config) {
@@ -514,7 +534,11 @@
             return new Map([
                 ["hero_title", config.hero_title || defaultConfig.hero_title],
                 ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
-                ["cta_button", config.cta_button || defaultConfig.cta_button]
+                ["catalog_btn_text", config.catalog_btn_text || defaultConfig.catalog_btn_text],
+                ["about_title", config.about_title || defaultConfig.about_title],
+                ["about_text_1", config.about_text_1 || defaultConfig.about_text_1],
+                ["about_text_2", config.about_text_2 || defaultConfig.about_text_2],
+                ["about_text_3", config.about_text_3 || defaultConfig.about_text_3]
             ]);
         }
 
@@ -525,5 +549,5 @@
             mapToEditPanelValues
         });
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aa8ad5215f3c2b7',t:'MTc2NTE1OTMwOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aae0693d233c29c',t:'MTc2NTIxNTM5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
