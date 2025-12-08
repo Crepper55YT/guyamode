@@ -1,1 +1,736 @@
+<!doctype html>
+<html lang="es" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuyaMode - Pour Lui Pour Elle Pour Tous</title>
+  <link rel="icon" type="image/x-icon" href="https://guyamode.com/favicon.ico">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
 
+        .collection-card {
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .collection-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .collection-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(229, 62, 62, 0.1) 0%, rgba(147, 51, 234, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            z-index: 1;
+        }
+
+        .collection-card:hover::before {
+            opacity: 1;
+        }
+
+        .product-image-container {
+            width: 100%;
+            height: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .collection-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .exclusive-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #e53e3e 0%, #9333ea 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 12px;
+            letter-spacing: 1px;
+            z-index: 2;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .add-to-cart-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .add-to-cart-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .add-to-cart-btn:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .hero-gradient {
+            background: #1e3a8a;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-gradient::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(229, 62, 62, 0.1) 0%, transparent 70%);
+            animation: pulse 8s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+            }
+            50% {
+                transform: translate(10%, 10%) scale(1.1);
+            }
+        }
+
+        .collection-title-text {
+            background: linear-gradient(135deg, #ffffff 0%, #e53e3e 50%, #9333ea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+        }
+
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 40;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            max-width: 400px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 50;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.active {
+            transform: translateX(0);
+        }
+
+        .cart-item {
+            display: flex;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            background-color: #f8f9fa;
+            margin-bottom: 12px;
+        }
+
+        .cart-item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            font-size: 28px;
+        }
+
+        @media (max-width: 768px) {
+            .product-image-container {
+                height: 300px;
+            }
+
+            .collection-title-text {
+                font-size: 2rem;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="w-full h-full">
+  <div class="w-full min-h-full flex flex-col" style="background-color: #f8f9fa;"><!-- Header -->
+   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3"><a href="https://guyamode.com" style="text-decoration: none;"> <img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 60px;" onerror="this.style.display='none'; this.alt='Logo no disponible';"> </a>
+      </div>
+      <div class="hidden md:flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
+      </div><button id="cartBtn" class="px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #3b82f6; color: #ffffff; cursor: pointer; border: none;"> <img src="https://guyamode.com/Carrito.png" alt="Carrito" style="height: 24px; width: 24px; object-fit: contain;" onerror="this.style.display='none'; this.alt='���';"> <span id="cartCount">(0)</span> </button>
+     </div>
+    </nav>
+   </header><!-- Main Content -->
+   <main class="flex-1 w-full overflow-auto"><!-- Hero Section -->
+    <section class="hero-gradient w-full py-20 md:py-32">
+     <div class="max-w-7xl mx-auto px-4 md:px-6 text-center relative z-10">
+      <h1 id="collection-title" class="text-4xl md:text-7xl font-black mb-6" style="color: #ffffff;">FAQ</h1>
+      <p id="collection-description" class="text-base md:text-xl max-w-3xl mx-auto" style="color: #cbd5e1;">Preguntas frecuentes</p>
+     </div>
+    </section><!-- FAQ Section -->
+    <section class="w-full py-16" style="background-color: #ffffff;">
+     <div class="max-w-4xl mx-auto px-4 md:px-6">
+      <h2 class="text-3xl md:text-4xl font-black text-center mb-4" style="color: #1e293b;">Preguntas Frecuentes</h2>
+      <p class="text-center mb-12" style="color: #64748b;">Todo lo que necesitas saber sobre nuestra colección exclusiva</p>
+      <div class="space-y-4"><!-- FAQ Item 1 -->
+       <div class="faq-item rounded-xl overflow-hidden" style="border: 2px solid #e5e7eb;"><button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center" style="background-color: #f8f9fa; border: none; cursor: pointer;"> <span class="font-bold text-lg" style="color: #1e293b;">¿Cuándo estará disponible esta colección?</span> <span class="faq-icon text-2xl" style="color: #e53e3e; transition: transform 0.3s ease;">+</span> </button>
+        <div class="faq-answer px-6 py-0 overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease;">
+         <p class="pb-4" style="color: #64748b;">La colección "Pour Lui Pour Elle Pour Tous" está disponible ahora mismo. Es una edición limitada, así que te recomendamos hacer tu pedido lo antes posible para asegurar tus piezas favoritas.</p>
+        </div>
+       </div><!-- FAQ Item 2 -->
+       <div class="faq-item rounded-xl overflow-hidden" style="border: 2px solid #e5e7eb;"><button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center" style="background-color: #f8f9fa; border: none; cursor: pointer;"> <span class="font-bold text-lg" style="color: #1e293b;">¿Ofrecen envío internacional?</span> <span class="faq-icon text-2xl" style="color: #e53e3e; transition: transform 0.3s ease;">+</span> </button>
+        <div class="faq-answer px-6 py-0 overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease;">
+         <p class="pb-4" style="color: #64748b;">Sí, enviamos a todo el mundo. Los tiempos de entrega varían según tu ubicación: 2-5 días hábiles para envíos nacionales y 7-14 días hábiles para envíos internacionales. Todos los pedidos incluyen número de seguimiento.</p>
+        </div>
+       </div><!-- FAQ Item 3 -->
+       <div class="faq-item rounded-xl overflow-hidden" style="border: 2px solid #e5e7eb;"><button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center" style="background-color: #f8f9fa; border: none; cursor: pointer;"> <span class="font-bold text-lg" style="color: #1e293b;">¿Cuál es la política de devoluciones?</span> <span class="faq-icon text-2xl" style="color: #e53e3e; transition: transform 0.3s ease;">+</span> </button>
+        <div class="faq-answer px-6 py-0 overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease;">
+         <p class="pb-4" style="color: #64748b;">Aceptamos devoluciones dentro de los 30 días posteriores a la recepción de tu pedido. Los artículos deben estar sin usar, con etiquetas originales y en su embalaje original. El proceso de reembolso toma de 5-10 días hábiles una vez recibido el artículo.</p>
+        </div>
+       </div><!-- FAQ Item 4 -->
+       <div class="faq-item rounded-xl overflow-hidden" style="border: 2px solid #e5e7eb;"><button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center" style="background-color: #f8f9fa; border: none; cursor: pointer;"> <span class="font-bold text-lg" style="color: #1e293b;">¿Qué tallas están disponibles?</span> <span class="faq-icon text-2xl" style="color: #e53e3e; transition: transform 0.3s ease;">+</span> </button>
+        <div class="faq-answer px-6 py-0 overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease;">
+         <p class="pb-4" style="color: #64748b;">Nuestra colección exclusiva está disponible en tallas XS a XXL. Cada producto incluye una guía de tallas detallada. Si necesitas ayuda para elegir tu talla perfecta, nuestro equipo de atención al cliente está disponible para asesorarte.</p>
+        </div>
+       </div><!-- FAQ Item 5 -->
+       <div class="faq-item rounded-xl overflow-hidden" style="border: 2px solid #e5e7eb;"><button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center" style="background-color: #f8f9fa; border: none; cursor: pointer;"> <span class="font-bold text-lg" style="color: #1e293b;">¿Los materiales son de alta calidad?</span> <span class="faq-icon text-2xl" style="color: #e53e3e; transition: transform 0.3s ease;">+</span> </button>
+        <div class="faq-answer px-6 py-0 overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease;">
+         <p class="pb-4" style="color: #64748b;">Absolutamente. Utilizamos solo materiales premium: seda italiana, algodón egipcio, lana merino y cuero genuino. Cada pieza pasa por rigurosos controles de calidad y está confeccionada por artesanos expertos para garantizar durabilidad y elegancia.</p>
+        </div>
+       </div><!-- FAQ Item 6 -->
+       <div class="faq-item rounded-xl overflow-hidden" style="border: 2px solid #e5e7eb;"><button class="faq-question w-full text-left px-6 py-4 flex justify-between items-center" style="background-color: #f8f9fa; border: none; cursor: pointer;"> <span class="font-bold text-lg" style="color: #1e293b;">¿Habrá reabastecimiento de la colección?</span> <span class="faq-icon text-2xl" style="color: #e53e3e; transition: transform 0.3s ease;">+</span> </button>
+        <div class="faq-answer px-6 py-0 overflow-hidden" style="max-height: 0; transition: max-height 0.3s ease, padding 0.3s ease;">
+         <p class="pb-4" style="color: #64748b;">No. Esta es una colección de edición limitada y una vez agotada, no habrá reabastecimiento. Cada pieza es exclusiva y diseñada específicamente para esta colección 2024. Te recomendamos asegurar tus favoritos mientras estén disponibles.</p>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Cart Overlay -->
+   <div class="cart-overlay" id="cartOverlay"></div><!-- Cart Sidebar -->
+   <aside class="cart-sidebar" id="cartSidebar">
+    <div class="p-6">
+     <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b; background: none; border: none; cursor: pointer;">✕</button>
+     </div>
+     <div id="cartItems" class="mb-6">
+      <div id="emptyCartMessage" class="text-center py-12">
+       <div class="text-6xl mb-6" style="color: #9ca3af;">
+        🛒
+       </div>
+       <p class="text-base" style="color: #64748b;">Tu carrito está vacío</p>
+      </div>
+     </div>
+     <div class="border-t pt-4" style="border-color: #e5e7eb;">
+      <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #e53e3e;">$0.00</span>
+      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background-color: #ff69b4; color: #ffffff; border: none; cursor: pointer;"> Proceder al Pago </button>
+      <p class="text-center text-sm mt-4" style="color: #64748b;">Pasarela de pagos disponible próximamente</p>
+     </div>
+    </div>
+   </aside><!-- Footer -->
+   <footer class="w-full py-12" style="background-color: #1e293b;">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+      <div class="col-span-2 md:col-span-1"><img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 50px;" onerror="this.style.display='none'; this.alt='GuyaMode';">
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Compra</h5>
+       <ul class="space-y-2" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/news" class="hover:opacity-80">Nuevos Llegados</a></li>
+        <li><a href="https://guyamode.com/offers" class="hover:opacity-80">Ofertas</a></li>
+        <li><a href="https://guyamode.com/catalogue" class="hover:opacity-80">Más Vendidos</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Ayuda</h5>
+       <ul class="space-y-2" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/faq" class="hover:opacity-80">FAQ</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Envíos</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Devoluciones</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Síguenos</h5>
+       <div class="flex gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+           <lineargradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FD5949;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#D6249F;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#285AEB;stop-opacity:1" />
+           </lineargradient>
+          </defs> <rect width="36" height="36" rx="8" fill="url(#ig-grad)" /> <rect x="11" y="11" width="14" height="14" rx="3.5" stroke="white" stroke-width="2" fill="none" /> <circle cx="18" cy="18" r="4" stroke="white" stroke-width="2" fill="none" /> <circle cx="23.5" cy="12.5" r="1.2" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#000000" /> <path d="M19.5 11.5C19.5 11.5 19.8 11.5 20.2 11.6C21.4 11.8 22.3 12.5 23 13.5C23.5 14.3 23.8 15.3 23.9 16.4C24 17 24 17.6 24 18.2V19.8C24 20.4 24 21 23.9 21.6C23.8 22.7 23.5 23.7 23 24.5C22.3 25.5 21.4 26.2 20.2 26.4C19.6 26.5 19 26.5 18.4 26.5H17.6C17 26.5 16.4 26.5 15.8 26.4C14.6 26.2 13.7 25.5 13 24.5C12.5 23.7 12.2 22.7 12.1 21.6C12 21 12 20.4 12 19.8V18.2C12 17.6 12 17 12.1 16.4C12.2 15.3 12.5 14.3 13 13.5C13.7 12.5 14.6 11.8 15.8 11.6C16.2 11.5 16.5 11.5 19.5 11.5ZM19.5 13C17 13 16.5 13 16 13.1C15.3 13.2 14.8 13.5 14.4 14C14.1 14.4 13.9 14.9 13.8 15.5C13.7 16 13.7 16.5 13.7 18.2V19.8C13.7 21.5 13.7 22 13.8 22.5C13.9 23.1 14.1 23.6 14.4 24C14.8 24.5 15.3 24.8 16 24.9C16.5 25 17 25 19.5 25C22 25 22.5 25 23 24.9C23.7 24.8 24.2 24.5 24.6 24C24.9 23.6 25.1 23.1 25.2 22.5C25.3 22 25.3 21.5 25.3 19.8V18.2C25.3 16.5 25.3 16 25.2 15.5C25.1 14.9 24.9 14.4 24.6 14C24.2 13.5 23.7 13.2 23 13.1C22.5 13 22 13 19.5 13Z" fill="#00F7EF" /> <path d="M17.2 16.8C17.2 16.4 17.5 16.2 17.8 16.4L21.5 18.6C21.8 18.8 21.8 19.2 21.5 19.4L17.8 21.6C17.5 21.8 17.2 21.6 17.2 21.2V16.8Z" fill="#FF0050" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="text-center pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
+      <p class="text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            collection_title: "FAQ",
+            collection_subtitle: "",
+            collection_description: "Preguntas frecuentes",
+            shop_now_text: "Comprar Ahora",
+            add_to_cart_text: "Agregar al Carrito",
+            background_color: "#f8f9fa",
+            surface_color: "#ffffff",
+            text_color: "#1e293b",
+            primary_action_color: "#ec4899",
+            secondary_action_color: "#ec4899",
+            font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+            font_size: 16
+        };
+
+        async function onConfigChange(config) {
+            const collectionTitle = config.collection_title || defaultConfig.collection_title;
+            const collectionSubtitle = config.collection_subtitle || defaultConfig.collection_subtitle;
+            const collectionDescription = config.collection_description || defaultConfig.collection_description;
+            const shopNowText = config.shop_now_text || defaultConfig.shop_now_text;
+            const addToCartText = config.add_to_cart_text || defaultConfig.add_to_cart_text;
+            
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+            
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
+
+            // Update text content
+            const collectionTitleElem = document.getElementById('collection-title');
+            const collectionDescriptionElem = document.getElementById('collection-description');
+
+            if (collectionTitleElem) {
+                collectionTitleElem.textContent = collectionTitle;
+                collectionTitleElem.style.fontFamily = baseFontStack;
+                collectionTitleElem.style.fontSize = `${fontSize * 4}px`;
+                collectionTitleElem.style.color = '#ffffff';
+            }
+            
+
+
+            if (collectionDescriptionElem) {
+                collectionDescriptionElem.textContent = collectionDescription;
+                collectionDescriptionElem.style.fontFamily = baseFontStack;
+                collectionDescriptionElem.style.fontSize = `${fontSize * 1.25}px`;
+            }
+
+            // Update colors
+            document.body.style.backgroundColor = backgroundColor;
+            
+            const header = document.querySelector('header');
+            if (header) header.style.backgroundColor = surfaceColor;
+            
+            const cartBtn = document.getElementById('cartBtn');
+            if (cartBtn) cartBtn.style.backgroundColor = '#3b82f6';
+
+            // Update product cards
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            addToCartButtons.forEach(btn => {
+                btn.style.backgroundColor = primaryActionColor;
+                btn.style.fontFamily = baseFontStack;
+                btn.textContent = addToCartText;
+            });
+
+            const productNames = document.querySelectorAll('.product-name');
+            productNames.forEach(name => {
+                name.style.fontFamily = baseFontStack;
+                name.style.fontSize = `${fontSize * 1.25}px`;
+                name.style.color = textColor;
+            });
+
+            const productPrices = document.querySelectorAll('.product-price');
+            productPrices.forEach(price => {
+                price.style.fontFamily = baseFontStack;
+                price.style.fontSize = `${fontSize * 1.5}px`;
+                price.style.color = primaryActionColor;
+            });
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["collection_title", config.collection_title || defaultConfig.collection_title],
+                ["collection_subtitle", config.collection_subtitle || defaultConfig.collection_subtitle],
+                ["collection_description", config.collection_description || defaultConfig.collection_description],
+                ["shop_now_text", config.shop_now_text || defaultConfig.shop_now_text],
+                ["add_to_cart_text", config.add_to_cart_text || defaultConfig.add_to_cart_text]
+            ]);
+        }
+
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Exclusive collection products
+        const exclusiveProducts = [
+            { id: 101, name: "Veste Couture Royale", price: 299.99, emoji: "🧥", description: "Elegancia atemporal" },
+            { id: 102, name: "Robe Mystique Noir", price: 349.99, emoji: "👗", description: "Sofisticación absoluta" },
+            { id: 103, name: "Costume Élégance Pure", price: 499.99, emoji: "🤵", description: "Estilo sin compromiso" },
+            { id: 104, name: "Sac Luxe Éternel", price: 189.99, emoji: "👜", description: "Acento de distinción" },
+            { id: 105, name: "Chaussures Prestige", price: 249.99, emoji: "👠", description: "Pasos con confianza" },
+            { id: 106, name: "Manteau Imperial", price: 399.99, emoji: "🧥", description: "Poder y elegancia" },
+            { id: 107, name: "Chemise Soie Royale", price: 159.99, emoji: "👔", description: "Refinamiento puro" },
+            { id: 108, name: "Pantalon Couture Fine", price: 199.99, emoji: "👖", description: "Corte impecable" },
+            { id: 109, name: "Accessoires Premium", price: 129.99, emoji: "💎", description: "El toque final perfecto" }
+        ];
+
+        // Cart state
+        let cart = [];
+
+        // LocalStorage functions
+        function saveCartToLocalStorage() {
+            localStorage.setItem('guyamode_collection_cart', JSON.stringify(cart));
+        }
+
+        function loadCartFromLocalStorage() {
+            const savedCart = localStorage.getItem('guyamode_collection_cart');
+            if (savedCart) {
+                try {
+                    cart = JSON.parse(savedCart);
+                } catch (error) {
+                    cart = [];
+                }
+            }
+        }
+
+        function renderProducts() {
+            const productsGrid = document.getElementById('products-grid');
+            productsGrid.innerHTML = '';
+
+            exclusiveProducts.forEach(product => {
+                const productCard = document.createElement('div');
+                productCard.className = 'collection-card rounded-2xl overflow-hidden';
+                productCard.style.backgroundColor = '#ffffff';
+                productCard.style.boxShadow = '0 8px 24px rgba(0,0,0,0.12)';
+
+                productCard.innerHTML = `
+                    <div class="product-image-container">
+                        <img src="https://guyamode.com/collection_producto_${product.id}.png" 
+                             alt="${product.name}" 
+                             class="product-image"
+                             style="background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);"
+                             onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%)'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.innerHTML='<div style=\\'font-size: 120px;\\'>${product.emoji}</div>';">
+                        <div class="exclusive-badge">EXCLUSIVO</div>
+                    </div>
+                    <div class="p-6">
+                        <p class="text-xs font-semibold mb-2 tracking-wider uppercase" style="color: #e53e3e;">${product.description}</p>
+                        <h3 class="product-name text-xl font-bold mb-4" style="color: #1e293b;">${product.name}</h3>
+                        <div class="flex justify-between items-center">
+                            <span class="product-price text-2xl font-black" style="color: #e53e3e;">$${product.price.toFixed(2)}</span>
+                            <button class="add-to-cart-btn px-6 py-3 rounded-full font-bold text-sm relative z-10" 
+                                    style="background-color: #ec4899; color: #ffffff; border: none; cursor: pointer;"
+                                    data-product-id="${product.id}">
+                                Agregar al Carrito
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                productsGrid.appendChild(productCard);
+            });
+
+            // Add event listeners
+            document.querySelectorAll('.add-to-cart-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const productId = parseInt(e.target.getAttribute('data-product-id'));
+                    addToCart(productId);
+                });
+            });
+
+            // Trigger config change to apply styles
+            if (window.elementSdk && window.elementSdk.config) {
+                onConfigChange(window.elementSdk.config);
+            }
+        }
+
+        function addToCart(productId) {
+            const product = exclusiveProducts.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+
+            saveCartToLocalStorage();
+            updateCartUI();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            saveCartToLocalStorage();
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const cartCount = document.getElementById('cartCount');
+            const cartItemsContainer = document.getElementById('cartItems');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartCount.textContent = `(${totalItems})`;
+
+            cartItemsContainer.innerHTML = '';
+
+            if (cart.length === 0) {
+                const emptyMessage = document.createElement('div');
+                emptyMessage.id = 'emptyCartMessage';
+                emptyMessage.className = 'text-center py-12';
+                emptyMessage.innerHTML = `
+                    <div class="text-6xl mb-6" style="color: #9ca3af;">×</div>
+                    <p class="text-base" style="color: #64748b;">Tu carrito está vacío</p>
+                `;
+                cartItemsContainer.appendChild(emptyMessage);
+                cartSubtotal.textContent = '$0.00';
+            } else {
+                cart.forEach(item => {
+                    const cartItemDiv = document.createElement('div');
+                    cartItemDiv.className = 'cart-item';
+
+                    cartItemDiv.innerHTML = `
+                        <img src="https://guyamode.com/collection_producto_${item.id}.png" alt="${item.name}" class="cart-item-image" style="background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%); object-fit: cover;" 
+                             onerror="this.style.display='flex'; this.innerHTML='<div style=\\'font-size: 24px;\\'>${item.emoji}</div>'; this.style.alignItems='center'; this.style.justifyContent='center'; this.style.objectFit='contain';">
+                        <div class="flex-1">
+                            <h4 class="font-semibold text-sm mb-1" style="color: #1e293b;">${item.name}</h4>
+                            <p class="text-xs mb-2" style="color: #64748b;">Cantidad: ${item.quantity}</p>
+                            <p class="font-bold" style="color: #e53e3e;">$${(item.price * item.quantity).toFixed(2)}</p>
+                        </div>
+                        <button class="remove-from-cart text-xl" style="color: #e53e3e; background: none; border: none; cursor: pointer;" data-product-id="${item.id}">×</button>
+                    `;
+
+                    cartItemsContainer.appendChild(cartItemDiv);
+                });
+
+                document.querySelectorAll('.remove-from-cart').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const productId = parseInt(e.target.getAttribute('data-product-id'));
+                        removeFromCart(productId);
+                    });
+                });
+
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            }
+        }
+
+        // Cart functionality
+        const cartBtn = document.getElementById('cartBtn');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+
+        function openCart() {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
+        }
+
+        function closeCartSidebar() {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        }
+
+        cartBtn.addEventListener('click', openCart);
+        closeCart.addEventListener('click', closeCartSidebar);
+        cartOverlay.addEventListener('click', closeCartSidebar);
+
+
+
+        // FAQ Functionality
+        document.querySelectorAll('.faq-question').forEach(button => {
+            button.addEventListener('click', () => {
+                const faqItem = button.parentElement;
+                const answer = faqItem.querySelector('.faq-answer');
+                const icon = button.querySelector('.faq-icon');
+                const isOpen = answer.style.maxHeight && answer.style.maxHeight !== '0px';
+
+                // Close all other FAQs
+                document.querySelectorAll('.faq-answer').forEach(otherAnswer => {
+                    if (otherAnswer !== answer) {
+                        otherAnswer.style.maxHeight = '0';
+                        otherAnswer.style.paddingTop = '0';
+                        otherAnswer.style.paddingBottom = '0';
+                    }
+                });
+
+                document.querySelectorAll('.faq-icon').forEach(otherIcon => {
+                    if (otherIcon !== icon) {
+                        otherIcon.textContent = '+';
+                        otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current FAQ
+                if (isOpen) {
+                    answer.style.maxHeight = '0';
+                    answer.style.paddingTop = '0';
+                    answer.style.paddingBottom = '0';
+                    icon.textContent = '+';
+                    icon.style.transform = 'rotate(0deg)';
+                } else {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                    answer.style.paddingTop = '16px';
+                    answer.style.paddingBottom = '0';
+                    icon.textContent = '−';
+                    icon.style.transform = 'rotate(180deg)';
+                }
+            });
+        });
+
+        // Initialize
+        loadCartFromLocalStorage();
+        renderProducts();
+        updateCartUI();
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aae9e1e8255c29c',t:'MTc2NTIyMTYwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
