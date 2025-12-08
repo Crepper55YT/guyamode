@@ -34,10 +34,6 @@
             height: 280px;
             object-fit: cover;
             background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 80px;
         }
 
         .add-to-cart-btn {
@@ -141,7 +137,6 @@
 
             .product-image {
                 height: 200px;
-                font-size: 60px;
             }
 
             .category-tab {
@@ -158,10 +153,10 @@
    <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
     <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
      <div class="flex justify-between items-center">
-      <div class="flex items-center gap-3"><a href="https://guyamode.com"> <img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none';"> </a>
+      <div class="flex items-center gap-3"><a href="https://guyamode.com" style="text-decoration: none;"> <img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 60px;" onerror="this.style.display='none'; this.alt='Logo no disponible';"> </a>
       </div>
       <div class="nav-links flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
-      </div><button id="cartBtn" class="px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff; cursor: pointer; border: none;"> <img src="assets/Carrito.png" alt="Carrito" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.style.display='none';"> <span id="cartCount">(0)</span> </button>
+      </div><button id="cartBtn" class="px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff; cursor: pointer; border: none;"> <img src="assets/Carrito.png" alt="Carrito" style="height: 24px; width: 24px; object-fit: contain;" onerror="this.style.display='none'; this.alt='🛒';"> <span id="cartCount">(0)</span> </button>
      </div>
     </nav>
    </header><!-- Main Content -->
@@ -235,7 +230,7 @@
    <footer class="w-full py-8 md:py-12" style="background-color: #1e293b;">
     <div class="max-w-7xl mx-auto px-4 md:px-6">
      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
-      <div class="col-span-2 md:col-span-1"><img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 50px; width: auto; object-fit: contain;" onerror="this.style.display='none';">
+      <div class="col-span-2 md:col-span-1"><img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 50px;" onerror="this.style.display='none'; this.alt='GuyaMode';">
       </div>
       <div>
        <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Compra</h5>
@@ -491,14 +486,14 @@
                 { id: 17, name: "Sandalias Playa", price: 29.99, emoji: "👡", category: "women" },
                 { id: 18, name: "Bikini Tropical", price: 49.99, emoji: "👙", category: "women" },
                 { id: 19, name: "Pijama Cómodo", price: 44.99, emoji: "👘", category: "women" },
-                { id: 20, name: "Cartera Compacta", price: 44.99, emoji: "💼", category: "women" }
+                { id: 20, name: "Cartera Compacta", price: 44.99, emoji: "����", category: "women" }
             ],
             boy: [
                 { id: 21, name: "Camiseta Deportiva Niño", price: 24.99, emoji: "👕", category: "boy" },
                 { id: 22, name: "Shorts Verano Niño", price: 29.99, emoji: "🩳", category: "boy" },
                 { id: 23, name: "Sudadera con Capucha", price: 39.99, emoji: "🧥", category: "boy" },
                 { id: 24, name: "Zapatillas Deportivas", price: 49.99, emoji: "👟", category: "boy" },
-                { id: 25, name: "Pantal��n Escolar", price: 34.99, emoji: "👖", category: "boy" },
+                { id: 25, name: "Pantal������n Escolar", price: 34.99, emoji: "👖", category: "boy" },
                 { id: 26, name: "Mochila Escolar", price: 39.99, emoji: "🎒", category: "boy" }
             ],
             girl: [
@@ -587,9 +582,8 @@
                 productCard.style.boxShadow = '0 4px 12px rgba(0,0,0,0.08)';
 
                 productCard.innerHTML = `
-                    <div class="product-image">
-                        ${product.emoji}
-                    </div>
+                    <img src="assets/producto_${product.id}.png" alt="${product.name}" class="product-image" 
+                         onerror="this.style.display='flex'; this.innerHTML='<div style=\\'font-size: 80px; color: #9ca3af;\\'>${product.emoji}</div>'; this.style.alignItems='center'; this.style.justifyContent='center';">
                     <div class="p-4 md:p-6">
                         <h3 class="product-name text-lg font-bold mb-3" style="color: #1e293b;">${product.name}</h3>
                         <div class="flex justify-between items-center">
@@ -701,9 +695,8 @@
                     cartItemDiv.className = 'cart-item';
 
                     cartItemDiv.innerHTML = `
-                        <div class="cart-item-image" style="background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%);">
-                            ${item.emoji}
-                        </div>
+                        <img src="assets/producto_${item.id}.png" alt="${item.name}" class="cart-item-image" style="background: linear-gradient(135deg, #e0e7ff 0%, #fce7f3 100%); object-fit: cover;" 
+                             onerror="this.style.display='flex'; this.innerHTML='<div style=\\'font-size: 24px;\\'>${item.emoji}</div>'; this.style.alignItems='center'; this.style.justifyContent='center'; this.style.objectFit='contain';">
                         <div class="flex-1">
                             <h4 class="font-semibold text-sm mb-1" style="color: #1e293b;">${item.name}</h4>
                             <p class="text-xs mb-2" style="color: #64748b;">Cantidad: ${item.quantity}</p>
@@ -827,5 +820,5 @@
         renderProducts(currentCategory);
         updateCartUI();
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aae754df1f2c29c',t:'MTc2NTIxOTkyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aae7be40076c29c',t:'MTc2NTIyMDE5OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
