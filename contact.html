@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - GuyaMode</title>
+  <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .contact-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-whatsapp {
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .btn-whatsapp:hover {
+            transform: scale(1.05);
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            padding: 20px;
+            border-radius: 12px;
+            transition: background-color 0.3s ease;
+        }
+
+        .info-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+
+        .icon-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 768px) {
+            nav .nav-links {
+                display: none;
+            }
+            
+            nav img {
+                height: 50px !important;
+            }
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="w-full min-h-full">
+  <div class="w-full min-h-full" style="background-color: #f8f9fa;"><!-- Header -->
+   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3"><a href="https://guyamode.com"> <img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none';"> </a>
+      </div>
+      <div class="nav-links flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
+      </div>
+     </div>
+    </nav>
+   </header><!-- Hero Section -->
+   <section class="w-full py-12 md:py-16" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+    <div class="max-w-7xl mx-auto px-4 md:px-6 text-center">
+     <h1 id="page-title" class="text-4xl md:text-5xl font-bold mb-4" style="color: #ffffff;">Contáctanos</h1>
+     <p id="page-subtitle" class="text-lg md:text-xl" style="color: #cbd5e1;">Estamos aquí para ayudarte. Ponte en contacto con nosotros.</p>
+    </div>
+   </section><!-- Contact Content -->
+   <section class="w-full py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-6"><!-- WhatsApp CTA -->
+     <div class="text-center mb-12"><a href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer" style="text-decoration: none;"> <button class="btn-whatsapp px-8 py-4 rounded-full text-lg font-semibold" style="background-color: #25D366; color: #ffffff; border: none; cursor: pointer;">
+        <svg width="28" height="28" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 2C8.28 2 2 8.28 2 16C2 18.54 2.72 20.92 4.02 22.94L2.14 29.14C2.06 29.4 2.16 29.68 2.38 29.84C2.52 29.94 2.68 30 2.84 30C2.94 30 3.04 29.98 3.14 29.94L9.54 28.12C11.48 29.32 13.68 30 16 30C23.72 30 30 23.72 30 16C30 8.28 23.72 2 16 2Z" fill="white" /> <path d="M23.5 19.8C23.18 20.86 21.54 21.76 20.62 21.92C20 22.02 19.2 22.08 16.62 21.02C13.24 19.66 11.06 16.14 10.9 15.92C10.74 15.7 9.5 14.08 9.5 12.4C9.5 10.72 10.36 9.9 10.7 9.54C11.04 9.18 11.46 9.08 11.7 9.08C11.82 9.08 11.92 9.08 12.02 9.08C12.36 9.08 12.54 9.1 12.76 9.62C13.1 10.44 13.88 12.12 13.98 12.32C14.08 12.52 14.14 12.74 14.02 12.96C13.9 13.18 13.84 13.3 13.68 13.48C13.52 13.66 13.34 13.88 13.2 14.02C13.04 14.18 12.86 14.36 13.04 14.66C13.22 14.96 13.86 16.06 14.84 16.94C16.12 18.08 17.18 18.44 17.5 18.6C17.82 18.76 18.04 18.74 18.24 18.52C18.44 18.3 19.04 17.6 19.26 17.3C19.48 17 19.7 17.04 19.98 17.14C20.26 17.24 21.92 18.06 22.24 18.22C22.56 18.38 22.78 18.46 22.88 18.6C22.98 18.74 22.98 19.26 23.5 19.8Z" fill="#25D366" />
+        </svg><span id="whatsapp-text">Chatea con nosotros en WhatsApp</span> </button> </a>
+     </div><!-- Contact Information Grid -->
+     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"><!-- Email Card -->
+      <div class="contact-card rounded-xl p-6" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+       <div class="info-item">
+        <div class="icon-circle" style="background-color: #e0f2fe;"><span>📧</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="text-lg font-bold mb-2" style="color: #1e293b;">Email</h3><a id="email-link" href="mailto:contacto@guyamode.com" style="color: #2563eb; text-decoration: none; word-break: break-all;" class="hover:opacity-80"> contacto@guyamode.com </a>
+        </div>
+       </div>
+      </div><!-- Phone Card -->
+      <div class="contact-card rounded-xl p-6" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+       <div class="info-item">
+        <div class="icon-circle" style="background-color: #dcfce7;"><span>📱</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="text-lg font-bold mb-2" style="color: #1e293b;">Teléfono</h3><a id="phone-link" href="tel:+5491112345678" style="color: #2563eb; text-decoration: none;" class="hover:opacity-80"> +54 9 11 1234-5678 </a>
+        </div>
+       </div>
+      </div><!-- Location Card -->
+      <div class="contact-card rounded-xl p-6" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+       <div class="info-item">
+        <div class="icon-circle" style="background-color: #fef3c7;"><span>📍</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="text-lg font-bold mb-2" style="color: #1e293b;">Ubicación</h3>
+         <p id="location-text" style="color: #64748b; line-height: 1.6;">Av. Corrientes 1234<br>
+           Buenos Aires, Argentina<br>
+           C1043 CABA</p>
+        </div>
+       </div>
+      </div>
+     </div><!-- Business Hours -->
+     <div class="contact-card rounded-xl p-8 max-w-2xl mx-auto" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+      <div class="text-center mb-6">
+       <div class="icon-circle mx-auto mb-4" style="background-color: #fce7f3;"><span>🕒</span>
+       </div>
+       <h3 id="hours-title" class="text-2xl font-bold mb-4" style="color: #1e293b;">Horario de Atención</h3>
+      </div>
+      <div class="space-y-3">
+       <div class="flex justify-between items-center py-2 border-b" style="border-color: #e5e7eb;"><span class="font-semibold" style="color: #1e293b;">Lunes a Viernes</span> <span id="weekday-hours" style="color: #64748b;">9:00 AM - 6:00 PM</span>
+       </div>
+       <div class="flex justify-between items-center py-2 border-b" style="border-color: #e5e7eb;"><span class="font-semibold" style="color: #1e293b;">Sábados</span> <span id="saturday-hours" style="color: #64748b;">10:00 AM - 2:00 PM</span>
+       </div>
+       <div class="flex justify-between items-center py-2"><span class="font-semibold" style="color: #1e293b;">Domingos</span> <span id="sunday-hours" style="color: #64748b;">Cerrado</span>
+       </div>
+      </div>
+     </div><!-- Company Description -->
+     <div class="mt-12 text-center max-w-3xl mx-auto">
+      <h2 id="company-title" class="text-3xl font-bold mb-4" style="color: #1e293b;">GuyaMode</h2>
+      <p id="company-description" class="text-lg leading-relaxed" style="color: #64748b;">Somos una empresa dedicada a ofrecer moda de calidad inspirada en las tendencias internacionales. Con años de experiencia en el sector, nos especializamos en ropa y accesorios para hombres y mujeres que buscan estilo, elegancia y comodidad. Nuestro compromiso es brindarte la mejor experiencia de compra con productos exclusivos y un servicio personalizado.</p>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer class="w-full py-8 md:py-12" style="background-color: #1e293b;">
+    <div class="max-w-7xl mx-auto px-4 md:px-6">
+     <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
+      <div class="col-span-2 md:col-span-1"><img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 50px; width: auto; object-fit: contain;" onerror="this.style.display='none';">
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Compra</h5>
+       <ul class="space-y-2 text-xs md:text-sm" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/news" class="hover:opacity-80">Nuevos Llegados</a></li>
+        <li><a href="https://guyamode.com/offers" class="hover:opacity-80">Ofertas</a></li>
+        <li><a href="https://guyamode.com/catalogue" class="hover:opacity-80">Más Vendidos</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Ayuda</h5>
+       <ul class="space-y-2 text-xs md:text-sm" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/faq" class="hover:opacity-80">FAQ</a></li>
+        <li><a href="https://guyamode.com/ayuda" class="hover:opacity-80">Envíos</a></li>
+        <li><a href="https://guyamode.com/ayuda" class="hover:opacity-80">Devoluciones</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Síguenos</h5>
+       <div class="flex gap-3 md:gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+           <lineargradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FD5949;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#D6249F;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#285AEB;stop-opacity:1" />
+           </lineargradient>
+          </defs> <rect width="36" height="36" rx="8" fill="url(#ig-grad)" /> <rect x="11" y="11" width="14" height="14" rx="3.5" stroke="white" stroke-width="2" fill="none" /> <circle cx="18" cy="18" r="4" stroke="white" stroke-width="2" fill="none" /> <circle cx="23.5" cy="12.5" r="1.2" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="32" height="32" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="black" /> <path d="M18 12C15.24 12 11 13.44 11 17.36V20.91C11 21.91 11.2 22.58 11.75 23.13C12.3 23.68 12.97 23.88 13.97 23.88H15V28.5L19.38 23.88H21.88C22.88 23.88 23.55 23.68 24.1 23.13C24.65 22.58 24.85 21.91 24.85 20.91V17.36C24.85 13.44 20.61 12 18 12Z" fill="#00F7EF" /> <path d="M21.3 18.86L19.21 21.86C18.98 22.19 18.65 22.36 18.3 22.36C17.95 22.36 17.62 22.19 17.39 21.86L15.3 18.86C14.94 18.38 15.06 17.71 15.54 17.35C16.02 16.99 16.69 17.11 17.05 17.59L18.3 19.27L19.55 17.59C19.91 17.11 20.58 16.99 21.06 17.35C21.54 17.71 21.66 18.38 21.3 18.86Z" fill="black" /> <path d="M22.5 13C22.5 13 24 14 24.8 16C25.6 18 26 21 25 23.5C24 26 21.5 27 18.5 27" stroke="#FF0050" stroke-width="1.8" stroke-linecap="round" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="text-center pt-6 md:pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
+      <p class="text-xs md:text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+        // Element SDK Configuration
+        const defaultConfig = {
+            page_title: "Contáctanos",
+            page_subtitle: "Estamos aquí para ayudarte. Ponte en contacto con nosotros.",
+            whatsapp_text: "Chatea con nosotros en WhatsApp",
+            whatsapp_number: "5491112345678",
+            email: "contacto@guyamode.com",
+            phone: "+54 9 11 1234-5678",
+            phone_link: "+5491112345678",
+            location: "Av. Corrientes 1234<br>Buenos Aires, Argentina<br>C1043 CABA",
+            hours_title: "Horario de Atención",
+            weekday_hours: "9:00 AM - 6:00 PM",
+            saturday_hours: "10:00 AM - 2:00 PM",
+            sunday_hours: "Cerrado",
+            company_title: "GuyaMode",
+            company_description: "Somos una empresa dedicada a ofrecer moda de calidad inspirada en las tendencias internacionales. Con años de experiencia en el sector, nos especializamos en ropa y accesorios para hombres y mujeres que buscan estilo, elegancia y comodidad. Nuestro compromiso es brindarte la mejor experiencia de compra con productos exclusivos y un servicio personalizado.",
+            background_color: "#f8f9fa",
+            surface_color: "#ffffff",
+            text_color: "#1e293b",
+            primary_action_color: "#25D366",
+            secondary_action_color: "#2563eb",
+            font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+            font_size: 16
+        };
+
+        async function onConfigChange(config) {
+            const pageTitle = config.page_title || defaultConfig.page_title;
+            const pageSubtitle = config.page_subtitle || defaultConfig.page_subtitle;
+            const whatsappText = config.whatsapp_text || defaultConfig.whatsapp_text;
+            const whatsappNumber = config.whatsapp_number || defaultConfig.whatsapp_number;
+            const email = config.email || defaultConfig.email;
+            const phone = config.phone || defaultConfig.phone;
+            const phoneLink = config.phone_link || defaultConfig.phone_link;
+            const location = config.location || defaultConfig.location;
+            const hoursTitle = config.hours_title || defaultConfig.hours_title;
+            const weekdayHours = config.weekday_hours || defaultConfig.weekday_hours;
+            const saturdayHours = config.saturday_hours || defaultConfig.saturday_hours;
+            const sundayHours = config.sunday_hours || defaultConfig.sunday_hours;
+            const companyTitle = config.company_title || defaultConfig.company_title;
+            const companyDescription = config.company_description || defaultConfig.company_description;
+            
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+            
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
+
+            // Update text content
+            document.getElementById('page-title').textContent = pageTitle;
+            document.getElementById('page-subtitle').textContent = pageSubtitle;
+            document.getElementById('whatsapp-text').textContent = whatsappText;
+            document.getElementById('email-link').textContent = email;
+            document.getElementById('email-link').href = `mailto:${email}`;
+            document.getElementById('phone-link').textContent = phone;
+            document.getElementById('phone-link').href = `tel:${phoneLink}`;
+            document.getElementById('location-text').innerHTML = location;
+            document.getElementById('hours-title').textContent = hoursTitle;
+            document.getElementById('weekday-hours').textContent = weekdayHours;
+            document.getElementById('saturday-hours').textContent = saturdayHours;
+            document.getElementById('sunday-hours').textContent = sundayHours;
+            document.getElementById('company-title').textContent = companyTitle;
+            document.getElementById('company-description').textContent = companyDescription;
+
+            // Update WhatsApp link
+            const whatsappLink = document.querySelector('a[href^="https://wa.me/"]');
+            if (whatsappLink) {
+                whatsappLink.href = `https://wa.me/${whatsappNumber}`;
+            }
+
+            // Update colors
+            document.body.style.backgroundColor = backgroundColor;
+            
+            const header = document.querySelector('header');
+            if (header) header.style.backgroundColor = surfaceColor;
+            
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.style.color = textColor);
+            
+            const whatsappBtn = document.querySelector('.btn-whatsapp');
+            if (whatsappBtn) whatsappBtn.style.backgroundColor = primaryActionColor;
+
+            const sectionTitles = document.querySelectorAll('h1, h2, h3');
+            sectionTitles.forEach(title => title.style.color = textColor);
+
+            const emailLink = document.getElementById('email-link');
+            const phoneLink = document.getElementById('phone-link');
+            if (emailLink) emailLink.style.color = secondaryActionColor;
+            if (phoneLink) phoneLink.style.color = secondaryActionColor;
+
+            // Update fonts
+            document.getElementById('page-title').style.fontFamily = baseFontStack;
+            document.getElementById('page-title').style.fontSize = `${fontSize * 3.125}px`;
+            
+            document.getElementById('page-subtitle').style.fontFamily = baseFontStack;
+            document.getElementById('page-subtitle').style.fontSize = `${fontSize * 1.25}px`;
+            
+            document.getElementById('company-title').style.fontFamily = baseFontStack;
+            document.getElementById('company-title').style.fontSize = `${fontSize * 1.875}px`;
+            
+            document.getElementById('company-description').style.fontFamily = baseFontStack;
+            document.getElementById('company-description').style.fontSize = `${fontSize * 1.125}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["page_title", config.page_title || defaultConfig.page_title],
+                ["page_subtitle", config.page_subtitle || defaultConfig.page_subtitle],
+                ["whatsapp_text", config.whatsapp_text || defaultConfig.whatsapp_text],
+                ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
+                ["email", config.email || defaultConfig.email],
+                ["phone", config.phone || defaultConfig.phone],
+                ["company_title", config.company_title || defaultConfig.company_title],
+                ["company_description", config.company_description || defaultConfig.company_description]
+            ]);
+        }
+
+        window.elementSdk.init({
+            defaultConfig,
+            onConfigChange,
+            mapToCapabilities,
+            mapToEditPanelValues
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aade05865e5c29c',t:'MTc2NTIxMzgyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
