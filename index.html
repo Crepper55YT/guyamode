@@ -1,0 +1,505 @@
+<!doctype html>
+<html lang="es">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GuyaMode - Moda Internacional</title>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+        body {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        html, body {
+            height: 100%;
+            width: 100%;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-primary {
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+        }
+
+        .category-badge {
+            backdrop-filter: blur(10px);
+        }
+
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 400px;
+            height: 100%;
+            background-color: #ffffff;
+            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
+            transition: right 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 999;
+        }
+
+        .cart-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px 0;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #e94560;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            border: 1px solid #d1d5db;
+            background-color: #ffffff;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: all 0.2s ease;
+        }
+
+        .quantity-btn:hover {
+            background-color: #f3f4f6;
+        }
+
+        .about-section {
+            display: block;
+        }
+    </style>
+  <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="w-full min-h-full">
+  <div class="w-full min-h-full" style="background-color: #f8f9fa;"><!-- Cart Overlay -->
+   <div class="cart-overlay" id="cartOverlay"></div><!-- Cart Sidebar -->
+   <aside class="cart-sidebar" id="cartSidebar">
+    <div class="p-6">
+     <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b;">✕</button>
+     </div>
+     <div id="cartItems" class="mb-6"><!-- Cart items will be inserted here -->
+     </div>
+     <div class="border-t pt-4" style="border-color: #e5e7eb;">
+      <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #e94560;">$0.00</span>
+      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background-color: #e94560; color: #ffffff;"> Proceder al Pago </button>
+      <p class="text-center text-sm mt-4" style="color: #64748b;">La pasarela de pagos se integrará próximamente</p>
+     </div>
+    </div>
+   </aside><!-- Header -->
+   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <nav class="max-w-7xl mx-auto px-6 py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3"><img src="https://guyamode.com/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none';">
+      </div>
+      <div class="flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogo" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Catálogo</a> <a href="https://guyamode.com/contacto" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
+      </div><button id="cartBtn" class="px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff;"> <img src="https://guyamode.com/carrito.png" alt="Carrito" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.style.display='none'; const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); svg.setAttribute('width', '24'); svg.setAttribute('height', '24'); svg.setAttribute('viewBox', '0 0 24 24'); svg.setAttribute('fill', 'none'); svg.innerHTML = '<path d=\'M9 2L7.17 4H3C1.9 4 1 4.9 1 6V20C1 21.1 1.9 22 3 22H21C22.1 22 23 21.1 23 20V6C23 4.9 22.1 4 21 4H16.83L15 2H9Z\' fill=\'currentColor\' opacity=\'0.3\'/><circle cx=\'12\' cy=\'13\' r=\'4\' fill=\'currentColor\'/>';  this.parentNode.insertBefore(svg, this.nextSibling);"> <span id="cartCount">(0)</span> </button>
+     </div>
+    </nav>
+   </header><!-- Hero Section -->
+   <section class="w-full hero-gradient py-20">
+    <div class="max-w-7xl mx-auto px-6 text-center">
+     <h2 id="hero-title" class="text-5xl font-bold mb-4" style="color: #ffffff;">Nueva Colección 2024</h2>
+     <p id="hero-subtitle" class="text-xl mb-8" style="color: #cbd5e1;">Descubre las últimas tendencias inspiradas en las pasarelas internacionales</p><a href="https://guyamode.com/catalogo" id="cta-button" class="btn-primary px-8 py-4 rounded-lg text-lg font-semibold inline-block" style="background-color: #e94560; color: #ffffff; text-decoration: none;"> Ver Catálogo Completo </a>
+    </div>
+   </section><!-- Best Sellers Section -->
+   <section id="bestSellersSection" class="about-section w-full py-16" style="background-color: #ffffff;">
+    <div class="max-w-7xl mx-auto px-6">
+     <h3 class="text-4xl font-bold text-center mb-4" style="color: #1e293b;">Productos Más Vendidos</h3>
+     <p class="text-center text-lg mb-12" style="color: #64748b;">Descubre las piezas favoritas de nuestros clientes</p>
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8" id="bestSellersGrid"><!-- Best selling products -->
+      <div class="product-card rounded-xl overflow-hidden" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       <div class="w-full h-64 overflow-hidden" style="background-color: #f3f4f6;"><img src="https://guyamode.com/venta1.png" alt="Camisa Premium Oxford" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>👔</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #667eea 0%, #764ba2 100%)';">
+       </div>
+       <div class="p-6">
+        <div class="category-badge inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background-color: rgba(233, 69, 96, 0.1); color: #e94560;">
+         ⭐ Más Vendido
+        </div>
+        <h4 class="text-xl font-bold mb-2" style="color: #1e293b;">Camisa Premium Oxford</h4>
+        <p class="text-sm mb-4" style="color: #64748b;">Inspirada en diseños clásicos británicos. Corte slim fit, 100% algodón.</p>
+        <div class="flex justify-between items-center"><span class="text-2xl font-bold" style="color: #e94560;">$45.00</span> <a href="https://guyamode.com/catalogo" class="px-4 py-2 rounded-lg text-sm font-semibold" style="background-color: #1e293b; color: #ffffff; text-decoration: none;"> Ver Detalles </a>
+        </div>
+       </div>
+      </div>
+      <div class="product-card rounded-xl overflow-hidden" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       <div class="w-full h-64 overflow-hidden" style="background-color: #f3f4f6;"><img src="https://guyamode.com/venta2.png" alt="Vestido Midi Elegante" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>👗</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #f093fb 0%, #f5576c 100%)';">
+       </div>
+       <div class="p-6">
+        <div class="category-badge inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background-color: rgba(233, 69, 96, 0.1); color: #e94560;">
+         ⭐ Más Vendido
+        </div>
+        <h4 class="text-xl font-bold mb-2" style="color: #1e293b;">Vestido Midi Elegante</h4>
+        <p class="text-sm mb-4" style="color: #64748b;">Inspirado en la moda francesa. Perfecto para cualquier ocasión especial.</p>
+        <div class="flex justify-between items-center"><span class="text-2xl font-bold" style="color: #e94560;">$68.00</span> <a href="https://guyamode.com/catalogo" class="px-4 py-2 rounded-lg text-sm font-semibold" style="background-color: #1e293b; color: #ffffff; text-decoration: none;"> Ver Detalles </a>
+        </div>
+       </div>
+      </div>
+      <div class="product-card rounded-xl overflow-hidden" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+       <div class="w-full h-64 overflow-hidden" style="background-color: #f3f4f6;"><img src="https://guyamode.com/venta3.png" alt="Sneakers Urban Street" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.style.display='none'; this.parentElement.innerHTML='<span class=\'text-8xl\'>👟</span>'; this.parentElement.style.display='flex'; this.parentElement.style.alignItems='center'; this.parentElement.style.justifyContent='center'; this.parentElement.style.background='linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)';">
+       </div>
+       <div class="p-6">
+        <div class="category-badge inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3" style="background-color: rgba(233, 69, 96, 0.1); color: #e94560;">
+         ⭐ Más Vendido
+        </div>
+        <h4 class="text-xl font-bold mb-2" style="color: #1e293b;">Sneakers Urban Street</h4>
+        <p class="text-sm mb-4" style="color: #64748b;">Inspirados en las calles de Tokio. Comodidad y estilo en cada paso.</p>
+        <div class="flex justify-between items-center"><span class="text-2xl font-bold" style="color: #e94560;">$75.00</span> <a href="https://guyamode.com/catalogo" class="px-4 py-2 rounded-lg text-sm font-semibold" style="background-color: #1e293b; color: #ffffff; text-decoration: none;"> Ver Detalles </a>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </section><!-- Footer -->
+   <footer id="contacto" class="w-full py-12" style="background-color: #1e293b;">
+    <div class="max-w-7xl mx-auto px-6">
+     <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+      <div>
+       <h4 class="text-xl font-bold mb-4" style="color: #2563eb;">GuyaMode</h4>
+       <p class="text-sm" style="color: #cbd5e1;">Estilo internacional a tu alcance. Moda inspirada en las mejores tendencias del mundo.</p>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Compra</h5>
+       <ul class="space-y-2 text-sm" style="color: #cbd5e1;">
+        <li><a href="https://guyamode.com/catalogo" class="hover:opacity-80">Catálogo</a></li>
+        <li><a href="#" class="hover:opacity-80">Ofertas</a></li>
+        <li><a href="#" class="hover:opacity-80">Más Vendidos</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Ayuda</h5>
+       <ul class="space-y-2 text-sm" style="color: #cbd5e1;">
+        <li><a href="#" class="hover:opacity-80">FAQ</a></li>
+        <li><a href="#" class="hover:opacity-80">Envíos</a></li>
+        <li><a href="#" class="hover:opacity-80">Devoluciones</a></li>
+       </ul>
+      </div>
+      <div>
+       <h5 class="font-semibold mb-4" style="color: #ffffff;">Síguenos</h5>
+       <div class="flex gap-4"><a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="36" height="36" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="#1877F2" /> <path d="M22 11H19C17.34 11 16 12.34 16 14V17H13V21H16V29H20V21H23L24 17H20V14C20 13.45 20.45 13 21 13H22V11Z" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="36" height="36" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><defs>
+           <lineargradient id="ig-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+            <stop offset="0%" style="stop-color:#FD5949;stop-opacity:1" />
+            <stop offset="50%" style="stop-color:#D6249F;stop-opacity:1" />
+            <stop offset="100%" style="stop-color:#285AEB;stop-opacity:1" />
+           </lineargradient>
+          </defs> <rect width="36" height="36" rx="8" fill="url(#ig-grad)" /> <rect x="11" y="11" width="14" height="14" rx="3.5" stroke="white" stroke-width="2" fill="none" /> <circle cx="18" cy="18" r="4" stroke="white" stroke-width="2" fill="none" /> <circle cx="23.5" cy="12.5" r="1.2" fill="white" />
+         </svg></a> <a href="#" target="_blank" rel="noopener noreferrer" class="hover:opacity-80">
+         <svg width="36" height="36" viewbox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="36" height="36" rx="8" fill="black" /> <path d="M18 12C15.24 12 11 13.44 11 17.36V20.91C11 21.91 11.2 22.58 11.75 23.13C12.3 23.68 12.97 23.88 13.97 23.88H15V28.5L19.38 23.88H21.88C22.88 23.88 23.55 23.68 24.1 23.13C24.65 22.58 24.85 21.91 24.85 20.91V17.36C24.85 13.44 20.61 12 18 12Z" fill="#00F7EF" /> <path d="M21.3 18.86L19.21 21.86C18.98 22.19 18.65 22.36 18.3 22.36C17.95 22.36 17.62 22.19 17.39 21.86L15.3 18.86C14.94 18.38 15.06 17.71 15.54 17.35C16.02 16.99 16.69 17.11 17.05 17.59L18.3 19.27L19.55 17.59C19.91 17.11 20.58 16.99 21.06 17.35C21.54 17.71 21.66 18.38 21.3 18.86Z" fill="black" /> <path d="M22.5 13C22.5 13 24 14 24.8 16C25.6 18 26 21 25 23.5C24 26 21.5 27 18.5 27" stroke="#FF0050" stroke-width="1.8" stroke-linecap="round" />
+         </svg></a>
+       </div>
+      </div>
+     </div>
+     <div class="text-center pt-8 border-t" style="border-color: #334155; color: #cbd5e1;">
+      <p class="text-sm">© 2024 GuyaMode. Todos los derechos reservados.</p>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <script>
+        // Cart State
+        let cart = [];
+
+        // Update Cart
+        function updateCart() {
+            const cartItems = document.getElementById('cartItems');
+            const cartCount = document.getElementById('cartCount');
+            const cartBadge = document.getElementById('cartBadge');
+            const cartSubtotal = document.getElementById('cartSubtotal');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+            cartCount.textContent = `(${totalItems})`;
+            
+            if (totalItems > 0) {
+                cartBadge.textContent = totalItems;
+                cartBadge.style.display = 'flex';
+            } else {
+                cartBadge.style.display = 'none';
+            }
+
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+
+            if (cart.length === 0) {
+                cartItems.innerHTML = `
+                    <div class="text-center py-12" style="color: #64748b;">
+                        <div class="text-6xl mb-4">🛍️</div>
+                        <p>Tu carrito está vacío</p>
+                    </div>
+                `;
+            } else {
+                cartItems.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="flex gap-4">
+                            <div class="w-20 h-20 rounded-lg flex items-center justify-center" style="background: ${item.gradient};">
+                                <span class="text-3xl">${item.emoji}</span>
+                            </div>
+                            <div class="flex-1">
+                                <h5 class="font-semibold mb-1" style="color: #1e293b;">${item.name}</h5>
+                                <p class="text-sm mb-2" style="color: #64748b;">$${item.price.toFixed(2)}</p>
+                                <div class="quantity-control">
+                                    <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">−</button>
+                                    <span class="font-semibold" style="color: #1e293b;">${item.quantity}</span>
+                                    <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
+                                    <button onclick="removeFromCart(${item.id})" class="text-sm ml-4" style="color: #e94560;">Eliminar</button>
+                                </div>
+                            </div>
+                            <div class="font-bold" style="color: #1e293b;">
+                                $${(item.price * item.quantity).toFixed(2)}
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        // Cart Actions
+        function increaseQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item) {
+                item.quantity += 1;
+                updateCart();
+            }
+        }
+
+        function decreaseQuantity(productId) {
+            const item = cart.find(item => item.id === productId);
+            if (item && item.quantity > 1) {
+                item.quantity -= 1;
+                updateCart();
+            }
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Cart UI Controls
+        function openCart() {
+            document.getElementById('cartSidebar').classList.add('open');
+            document.getElementById('cartOverlay').classList.add('show');
+        }
+
+        function closeCart() {
+            document.getElementById('cartSidebar').classList.remove('open');
+            document.getElementById('cartOverlay').classList.remove('show');
+        }
+
+        // Event Listeners
+        document.getElementById('cartBtn').addEventListener('click', openCart);
+        document.getElementById('closeCart').addEventListener('click', closeCart);
+        document.getElementById('cartOverlay').addEventListener('click', closeCart);
+        document.getElementById('checkoutBtn').addEventListener('click', () => {
+            const message = document.createElement('div');
+            message.textContent = 'La pasarela de pagos se integrará próximamente';
+            message.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #2563eb; color: white; padding: 16px 32px; border-radius: 8px; z-index: 2000; font-weight: 600;';
+            document.body.appendChild(message);
+            setTimeout(() => message.remove(), 3000);
+        });
+
+        // Initialize
+        updateCart();
+
+        // Element SDK Configuration
+        const defaultConfig = {
+            hero_title: "Nueva Colección 2024",
+            hero_subtitle: "Descubre las últimas tendencias inspiradas en las pasarelas internacionales",
+            cta_button: "Ver Catálogo Completo",
+            background_color: "#f8f9fa",
+            surface_color: "#ffffff",
+            text_color: "#1e293b",
+            primary_action_color: "#e94560",
+            secondary_action_color: "#2563eb",
+            font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
+            font_size: 16
+        };
+
+        async function onConfigChange(config) {
+            const heroTitle = config.hero_title || defaultConfig.hero_title;
+            const heroSubtitle = config.hero_subtitle || defaultConfig.hero_subtitle;
+            const ctaButton = config.cta_button || defaultConfig.cta_button;
+            
+            const backgroundColor = config.background_color || defaultConfig.background_color;
+            const surfaceColor = config.surface_color || defaultConfig.surface_color;
+            const textColor = config.text_color || defaultConfig.text_color;
+            const primaryActionColor = config.primary_action_color || defaultConfig.primary_action_color;
+            const secondaryActionColor = config.secondary_action_color || defaultConfig.secondary_action_color;
+            
+            const fontFamily = config.font_family || defaultConfig.font_family;
+            const fontSize = config.font_size || defaultConfig.font_size;
+            const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
+
+            // Update text content
+            document.getElementById('hero-title').textContent = heroTitle;
+            document.getElementById('hero-subtitle').textContent = heroSubtitle;
+            document.getElementById('cta-button').textContent = ctaButton;
+
+            // Update colors
+            document.body.style.backgroundColor = backgroundColor;
+            
+            const header = document.querySelector('header');
+            if (header) header.style.backgroundColor = surfaceColor;
+            
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach(link => link.style.color = textColor);
+            
+            const cartBtn = document.getElementById('cartBtn');
+            if (cartBtn) cartBtn.style.backgroundColor = secondaryActionColor;
+            
+            const ctaBtn = document.getElementById('cta-button');
+            if (ctaBtn) ctaBtn.style.backgroundColor = primaryActionColor;
+            
+            const sectionTitles = document.querySelectorAll('section h3, section h4');
+            sectionTitles.forEach(title => title.style.color = textColor);
+
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            if (checkoutBtn) checkoutBtn.style.backgroundColor = primaryActionColor;
+
+            // Update fonts
+            document.getElementById('hero-title').style.fontFamily = baseFontStack;
+            document.getElementById('hero-title').style.fontSize = `${fontSize * 3.125}px`;
+            
+            document.getElementById('hero-subtitle').style.fontFamily = baseFontStack;
+            document.getElementById('hero-subtitle').style.fontSize = `${fontSize * 1.25}px`;
+            
+            document.getElementById('cta-button').style.fontFamily = baseFontStack;
+            document.getElementById('cta-button').style.fontSize = `${fontSize * 1.125}px`;
+        }
+
+        function mapToCapabilities(config) {
+            return {
+                recolorables: [
+                    {
+                        get: () => config.background_color || defaultConfig.background_color,
+                        set: (value) => {
+                            config.background_color = value;
+                            window.elementSdk.setConfig({ background_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.surface_color || defaultConfig.surface_color,
+                        set: (value) => {
+                            config.surface_color = value;
+                            window.elementSdk.setConfig({ surface_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.text_color || defaultConfig.text_color,
+                        set: (value) => {
+                            config.text_color = value;
+                            window.elementSdk.setConfig({ text_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.primary_action_color || defaultConfig.primary_action_color,
+                        set: (value) => {
+                            config.primary_action_color = value;
+                            window.elementSdk.setConfig({ primary_action_color: value });
+                        }
+                    },
+                    {
+                        get: () => config.secondary_action_color || defaultConfig.secondary_action_color,
+                        set: (value) => {
+                            config.secondary_action_color = value;
+                            window.elementSdk.setConfig({ secondary_action_color: value });
+                        }
+                    }
+                ],
+                borderables: [],
+                fontEditable: {
+                    get: () => config.font_family || defaultConfig.font_family,
+                    set: (value) => {
+                        config.font_family = value;
+                        window.elementSdk.setConfig({ font_family: value });
+                    }
+                },
+                fontSizeable: {
+                    get: () => config.font_size || defaultConfig.font_size,
+                    set: (value) => {
+                        config.font_size = value;
+                        window.elementSdk.setConfig({ font_size: value });
+                    }
+                }
+            };
+        }
+
+        function mapToEditPanelValues(config) {
+            return new Map([
+                ["hero_title", config.hero_title || defaultConfig.hero_title],
+                ["hero_subtitle", config.hero_subtitle || defaultConfig.hero_subtitle],
+                ["cta_button", config.cta_button || defaultConfig.cta_button]
+            ]);
+        }
+
+        window.elementSdk.init({
+            defaultConfig,
+            onConfigChange,
+            mapToCapabilities,
+            mapToEditPanelValues
+        });
+    </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aa86702d520c29c',t:'MTc2NTE1NjQyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
