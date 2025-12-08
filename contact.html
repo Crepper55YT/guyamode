@@ -3,7 +3,7 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GuyaMode - Contact</title>
+  <title>Contacto - GuyaMode</title>
   <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
   <script src="/_sdk/element_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
@@ -25,18 +25,16 @@
 
         .contact-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.12);
         }
 
-        .btn-whatsapp {
+        .whatsapp-btn {
             transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
         }
 
-        .btn-whatsapp:hover {
+        .whatsapp-btn:hover {
             transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(37, 211, 102, 0.3);
         }
 
         .info-item {
@@ -45,16 +43,18 @@
             gap: 16px;
             padding: 20px;
             border-radius: 12px;
-            transition: background-color 0.3s ease;
+            background-color: #ffffff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            transition: all 0.3s ease;
         }
 
         .info-item:hover {
-            background-color: rgba(0, 0, 0, 0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .icon-circle {
-            width: 56px;
-            height: 56px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -63,85 +63,38 @@
             flex-shrink: 0;
         }
 
+        .cart-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            z-index: 40;
+        }
+
+        .cart-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
         .cart-sidebar {
             position: fixed;
             top: 0;
-            right: -100%;
+            right: 0;
             width: 100%;
             max-width: 400px;
             height: 100%;
             background-color: #ffffff;
-            box-shadow: -4px 0 12px rgba(0, 0, 0, 0.1);
-            transition: right 0.3s ease;
-            z-index: 1000;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 50;
             overflow-y: auto;
         }
 
-        .cart-sidebar.open {
-            right: 0;
-        }
-
-        .cart-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.3s ease, visibility 0.3s ease;
-            z-index: 999;
-        }
-
-        .cart-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .cart-item {
-            border-bottom: 1px solid #e5e7eb;
-            padding: 16px 0;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background-color: #e94560;
-            color: white;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .quantity-control {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .quantity-btn {
-            width: 28px;
-            height: 28px;
-            border-radius: 4px;
-            border: 1px solid #d1d5db;
-            background-color: #ffffff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            transition: all 0.2s ease;
-        }
-
-        .quantity-btn:hover {
-            background-color: #f3f4f6;
+        .cart-sidebar.active {
+            transform: translateX(0);
         }
 
         @media (max-width: 768px) {
@@ -152,107 +105,96 @@
             nav img {
                 height: 50px !important;
             }
-            
-            .cart-sidebar {
-                width: 100%;
-            }
         }
     </style>
   <style>@view-transition { navigation: auto; }</style>
   <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
  </head>
- <body class="w-full min-h-full">
-  <div class="w-full min-h-full" style="background-color: #f8f9fa;"><!-- Cart Overlay -->
+ <body class="w-full h-full">
+  <div class="w-full min-h-full flex flex-col" style="background-color: #f8f9fa;"><!-- Header -->
+   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
+    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+     <div class="flex justify-between items-center">
+      <div class="flex items-center gap-3"><a href="https://guyamode.com"> <img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none';"> </a>
+      </div>
+      <div class="nav-links flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
+      </div><button id="cartBtn" class="px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff; cursor: pointer;"> <img src="assets/Carrito.png" alt="Carrito" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.style.display='none';"> <span id="cartCount">(0)</span> </button>
+     </div>
+    </nav>
+   </header><!-- Main Content -->
+   <main class="flex-1 w-full overflow-auto"><!-- Hero Section -->
+    <section class="w-full py-16 md:py-20" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
+     <div class="max-w-7xl mx-auto px-4 md:px-6 text-center">
+      <h1 id="contact-title" class="text-3xl md:text-5xl font-bold mb-4" style="color: #ffffff;">Contáctanos</h1>
+      <p id="contact-subtitle" class="text-base md:text-xl max-w-2xl mx-auto" style="color: #cbd5e1;">Estamos aquí para ayudarte. Escríbenos y te responderemos lo antes posible</p>
+     </div>
+    </section><!-- Contact Information Section -->
+    <section class="w-full py-12 md:py-16">
+     <div class="max-w-7xl mx-auto px-4 md:px-6"><!-- WhatsApp Button -->
+      <div class="max-w-2xl mx-auto mb-12"><a id="whatsapp-link" href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" style="text-decoration: none;"> <button class="whatsapp-btn w-full py-4 px-6 rounded-xl font-bold text-lg flex items-center justify-center gap-3" style="background-color: #25d366; color: #ffffff; border: none; cursor: pointer;">
+         <svg width="32" height="32" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 0C7.163 0 0 7.163 0 16C0 18.862 0.792 21.633 2.284 24.045L0.791 31.209L8.188 29.749C10.533 31.117 13.234 31.843 16 31.843C24.837 31.843 32 24.68 32 15.843C32 11.562 30.315 7.569 27.314 4.569C24.314 1.569 20.32 -0.157 16 0ZM16 29.095C13.522 29.095 11.092 28.426 9 27.165L8.548 26.896L3.702 28.063L4.893 23.359L4.594 22.885C3.195 20.717 2.453 18.196 2.453 15.608C2.453 8.515 8.515 2.453 16 2.453C19.631 2.453 23.045 3.868 25.608 6.431C28.171 8.994 29.547 12.369 29.547 16C29.547 23.485 23.485 29.095 16 29.095ZM23.452 19.388C23.062 19.193 21.139 18.246 20.788 18.129C20.437 18.012 20.164 17.954 19.891 18.344C19.618 18.734 18.876 19.583 18.642 19.856C18.408 20.129 18.174 20.168 17.784 19.973C17.394 19.778 16.108 19.349 14.586 18.012C13.398 16.965 12.607 15.661 12.373 15.271C12.139 14.881 12.349 14.662 12.544 14.467C12.719 14.292 12.934 14.018 13.129 13.784C13.324 13.55 13.382 13.355 13.499 13.082C13.616 12.809 13.558 12.575 13.46 12.38C13.362 12.185 12.607 10.262 12.295 9.482C12.022 8.741 11.71 8.838 11.456 8.838H10.671C10.398 8.838 9.969 8.936 9.618 9.326C9.267 9.716 8.242 10.663 8.242 12.586C8.242 14.509 9.657 16.354 9.852 16.627C10.047 16.9 12.607 20.876 16.468 22.565C17.394 22.975 18.115 23.209 18.681 23.385C19.618 23.697 20.476 23.658 21.159 23.561C21.92 23.444 23.491 22.604 23.803 21.686C24.115 20.768 24.115 19.973 24.017 19.817C23.919 19.661 23.842 19.583 23.452 19.388Z" fill="white" />
+         </svg><span id="whatsapp-btn-text">Chatea con nosotros en WhatsApp</span> </button> </a>
+      </div><!-- Contact Info Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12"><!-- Email -->
+       <div class="info-item">
+        <div class="icon-circle" style="background-color: #e0f2fe;"><span style="color: #2563eb;">✉️</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="text-xl font-bold mb-2" style="color: #1e293b;">Correo Electrónico</h3><a id="email-link" href="mailto:info@guyamode.com" style="color: #2563eb; text-decoration: none; font-size: 16px;" class="hover:underline"> <span id="email-text">info@guyamode.com</span> </a>
+         <p class="text-sm mt-2" style="color: #64748b;">Respuesta en 24-48 horas</p>
+        </div>
+       </div><!-- Address -->
+       <div class="info-item">
+        <div class="icon-circle" style="background-color: #fce7f3;"><span style="color: #e94560;">����</span>
+        </div>
+        <div class="flex-1">
+         <h3 class="text-xl font-bold mb-2" style="color: #1e293b;">Dirección</h3>
+         <p id="address-text" style="color: #64748b; font-size: 16px; line-height: 1.6;">Calle Principal #123<br>
+           Ciudad, País</p>
+        </div>
+       </div>
+      </div><!-- Schedule Card -->
+      <div class="max-w-2xl mx-auto">
+       <div class="contact-card rounded-xl p-8" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
+        <div class="flex items-center gap-3 mb-6">
+         <div class="icon-circle" style="background-color: #f0fdf4;"><span style="color: #16a34a;">🕐</span>
+         </div>
+         <h3 id="schedule-title" class="text-2xl font-bold" style="color: #1e293b;">Horario de Atención</h3>
+        </div>
+        <div class="space-y-4">
+         <div class="flex justify-between items-center pb-3" style="border-bottom: 1px solid #e5e7eb;"><span id="schedule-weekdays" class="font-medium" style="color: #1e293b;">Lunes a Viernes:</span> <span style="color: #64748b;">9:00 AM - 6:00 PM</span>
+         </div>
+         <div class="flex justify-between items-center pb-3" style="border-bottom: 1px solid #e5e7eb;"><span id="schedule-saturday" class="font-medium" style="color: #1e293b;">Sábado:</span> <span style="color: #64748b;">10:00 AM - 4:00 PM</span>
+         </div>
+         <div class="flex justify-between items-center"><span id="schedule-sunday" class="font-medium" style="color: #1e293b;">Domingo:</span> <span style="color: #64748b;">Cerrado</span>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </section>
+   </main><!-- Cart Overlay -->
    <div class="cart-overlay" id="cartOverlay"></div><!-- Cart Sidebar -->
    <aside class="cart-sidebar" id="cartSidebar">
     <div class="p-6">
      <div class="flex justify-between items-center mb-6">
-      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b;">✕</button>
+      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b; background: none; border: none; cursor: pointer;">✕</button>
      </div>
      <div id="cartItems" class="mb-6"><!-- Cart items will be inserted here -->
+      <div id="emptyCartMessage" class="text-center py-8">
+       <div class="text-4xl mb-3">
+        🛒
+       </div>
+       <p class="text-base" style="color: #64748b;">Tu carrito está vacío</p>
+      </div>
      </div>
      <div class="border-t pt-4" style="border-color: #e5e7eb;">
       <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #e94560;">$0.00</span>
-      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background-color: #e94560; color: #ffffff;"> Proceder al Pago </button>
+      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background-color: #e94560; color: #ffffff; border: none; cursor: pointer;"> Proceder al Pago </button>
       <p class="text-center text-sm mt-4" style="color: #64748b;">La pasarela de pagos se integrará próximamente</p>
      </div>
     </div>
-   </aside><!-- Header -->
-   <header class="w-full" style="background-color: #ffffff; box-shadow: 0 2px 8px rgba(0,0,0,0.1);">
-    <nav class="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
-     <div class="flex justify-between items-center">
-      <div class="flex items-center gap-3"><a href="https://guyamode.com"> <img src="assets/logo1.png" alt="GuyaMode Logo" style="height: 60px; width: auto;" onerror="this.style.display='none'; console.log('Error loading logo');"> </a>
-      </div>
-      <div class="nav-links flex gap-6 items-center"><a href="https://guyamode.com/about-us" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Acerca de</a> <a href="https://guyamode.com/catalogue" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Productos</a> <a href="https://guyamode.com/contact" class="hover:opacity-80" style="color: #1e293b; text-decoration: none;">Contacto</a>
-      </div><button id="cartBtn" class="px-3 md:px-4 py-2 rounded-lg flex items-center gap-2 relative" style="background-color: #2563eb; color: #ffffff;"> <img src="assets/Carrito.png" alt="Carrito" style="width: 24px; height: 24px; object-fit: contain;" onerror="this.style.display='none'; console.log('Error loading cart icon');"> <span id="cartCount" class="hidden md:inline">(0)</span> <span class="cart-badge" id="cartBadge" style="display: none;">0</span> </button>
-     </div>
-    </nav>
-   </header><!-- Hero Section -->
-   <section class="w-full py-12 md:py-16" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);">
-    <div class="max-w-7xl mx-auto px-4 md:px-6 text-center">
-     <h1 id="page-title" class="text-4xl md:text-5xl font-bold mb-4" style="color: #ffffff !important;">Contáctanos</h1>
-     <p id="page-subtitle" class="text-lg md:text-xl" style="color: #cbd5e1;">Estamos aquí para ayudarte. Ponte en contacto con nosotros.</p>
-    </div>
-   </section><!-- Contact Content -->
-   <section class="w-full py-12 md:py-16">
-    <div class="max-w-7xl mx-auto px-4 md:px-6"><!-- WhatsApp CTA -->
-     <div class="text-center mb-12"><a href="https://wa.me/5491112345678" target="_blank" rel="noopener noreferrer" style="text-decoration: none;"> <button class="btn-whatsapp px-8 py-4 rounded-full text-lg font-semibold" style="background-color: #25D366; color: #ffffff; border: none; cursor: pointer;">
-        <svg width="28" height="28" viewbox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M16 2C8.28 2 2 8.28 2 16C2 18.54 2.72 20.92 4.02 22.94L2.14 29.14C2.06 29.4 2.16 29.68 2.38 29.84C2.52 29.94 2.68 30 2.84 30C2.94 30 3.04 29.98 3.14 29.94L9.54 28.12C11.48 29.32 13.68 30 16 30C23.72 30 30 23.72 30 16C30 8.28 23.72 2 16 2Z" fill="white" /> <path d="M23.5 19.8C23.18 20.86 21.54 21.76 20.62 21.92C20 22.02 19.2 22.08 16.62 21.02C13.24 19.66 11.06 16.14 10.9 15.92C10.74 15.7 9.5 14.08 9.5 12.4C9.5 10.72 10.36 9.9 10.7 9.54C11.04 9.18 11.46 9.08 11.7 9.08C11.82 9.08 11.92 9.08 12.02 9.08C12.36 9.08 12.54 9.1 12.76 9.62C13.1 10.44 13.88 12.12 13.98 12.32C14.08 12.52 14.14 12.74 14.02 12.96C13.9 13.18 13.84 13.3 13.68 13.48C13.52 13.66 13.34 13.88 13.2 14.02C13.04 14.18 12.86 14.36 13.04 14.66C13.22 14.96 13.86 16.06 14.84 16.94C16.12 18.08 17.18 18.44 17.5 18.6C17.82 18.76 18.04 18.74 18.24 18.52C18.44 18.3 19.04 17.6 19.26 17.3C19.48 17 19.7 17.04 19.98 17.14C20.26 17.24 21.92 18.06 22.24 18.22C22.56 18.38 22.78 18.46 22.88 18.6C22.98 18.74 22.98 19.26 23.5 19.8Z" fill="#25D366" />
-        </svg><span id="whatsapp-text">Chatea con nosotros en WhatsApp</span> </button> </a>
-     </div><!-- Contact Information Grid -->
-     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12"><!-- Email Card -->
-      <div class="contact-card rounded-xl p-6" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-       <div class="info-item">
-        <div class="icon-circle" style="background-color: #e0f2fe;"><span>📧</span>
-        </div>
-        <div class="flex-1">
-         <h3 class="text-lg font-bold mb-2" style="color: #1e293b;">Email</h3><a id="email-link" href="mailto:contacto@guyamode.com" style="color: #2563eb; text-decoration: none; word-break: break-all;" class="hover:opacity-80"> contacto@guyamode.com </a>
-        </div>
-       </div>
-      </div><!-- Phone Card -->
-      <div class="contact-card rounded-xl p-6" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-       <div class="info-item">
-        <div class="icon-circle" style="background-color: #dcfce7;"><span>📱</span>
-        </div>
-        <div class="flex-1">
-         <h3 class="text-lg font-bold mb-2" style="color: #1e293b;">Teléfono</h3><a id="phone-link" href="tel:+5491112345678" style="color: #2563eb; text-decoration: none;" class="hover:opacity-80"> +54 9 11 1234-5678 </a>
-        </div>
-       </div>
-      </div><!-- Location Card -->
-      <div class="contact-card rounded-xl p-6" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-       <div class="info-item">
-        <div class="icon-circle" style="background-color: #fef3c7;"><span>📍</span>
-        </div>
-        <div class="flex-1">
-         <h3 class="text-lg font-bold mb-2" style="color: #1e293b;">Ubicación</h3>
-         <p id="location-text" style="color: #64748b; line-height: 1.6;">Av. Corrientes 1234<br>
-           Buenos Aires, Argentina<br>
-           C1043 CABA</p>
-        </div>
-       </div>
-      </div>
-     </div><!-- Business Hours -->
-     <div class="contact-card rounded-xl p-8 max-w-2xl mx-auto" style="background-color: #ffffff; box-shadow: 0 4px 12px rgba(0,0,0,0.08);">
-      <div class="text-center mb-6">
-       <div class="icon-circle mx-auto mb-4" style="background-color: #fce7f3;"><span>🕒</span>
-       </div>
-       <h3 id="hours-title" class="text-2xl font-bold mb-4" style="color: #1e293b;">Horario de Atención</h3>
-      </div>
-      <div class="space-y-3">
-       <div class="flex justify-between items-center py-2 border-b" style="border-color: #e5e7eb;"><span class="font-semibold" style="color: #1e293b;">Lunes a Viernes</span> <span id="weekday-hours" style="color: #64748b;">9:00 AM - 6:00 PM</span>
-       </div>
-       <div class="flex justify-between items-center py-2 border-b" style="border-color: #e5e7eb;"><span class="font-semibold" style="color: #1e293b;">Sábados</span> <span id="saturday-hours" style="color: #64748b;">10:00 AM - 2:00 PM</span>
-       </div>
-       <div class="flex justify-between items-center py-2"><span class="font-semibold" style="color: #1e293b;">Domingos</span> <span id="sunday-hours" style="color: #64748b;">Cerrado</span>
-       </div>
-      </div>
-     </div><!-- Company Description -->
-     <div class="mt-12 text-center max-w-3xl mx-auto">
-      <h2 id="company-title" class="text-3xl font-bold mb-4" style="color: #1e293b;">GuyaMode</h2>
-      <p id="company-description" class="text-lg leading-relaxed" style="color: #64748b;">Somos una empresa dedicada a ofrecer moda de calidad inspirada en las tendencias internacionales. Con años de experiencia en el sector, nos especializamos en ropa y accesorios para hombres y mujeres que buscan estilo, elegancia y comodidad. Nuestro compromiso es brindarte la mejor experiencia de compra con productos exclusivos y un servicio personalizado.</p>
-     </div>
-    </div>
-   </section><!-- Footer -->
+   </aside><!-- Footer -->
    <footer class="w-full py-8 md:py-12" style="background-color: #1e293b;">
     <div class="max-w-7xl mx-auto px-4 md:px-6">
      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-6 md:mb-8">
@@ -270,8 +212,8 @@
        <h5 class="font-semibold mb-4 text-sm md:text-base" style="color: #ffffff;">Ayuda</h5>
        <ul class="space-y-2 text-xs md:text-sm" style="color: #cbd5e1;">
         <li><a href="https://guyamode.com/faq" class="hover:opacity-80">FAQ</a></li>
-        <li><a href="https://guyamode.com/ayuda" class="hover:opacity-80">Envíos</a></li>
-        <li><a href="https://guyamode.com/ayuda" class="hover:opacity-80">Devoluciones</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Env��os</a></li>
+        <li><a href="https://guyamode.com/help" class="hover:opacity-80">Devoluciones</a></li>
        </ul>
       </div>
       <div>
@@ -299,165 +241,38 @@
    </footer>
   </div>
   <script>
-        // Cart State
-        let cart = [];
-
-        // Update Cart
-        function updateCart() {
-            const cartItems = document.getElementById('cartItems');
-            const cartCount = document.getElementById('cartCount');
-            const cartBadge = document.getElementById('cartBadge');
-            const cartSubtotal = document.getElementById('cartSubtotal');
-
-            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
-            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-
-            cartCount.textContent = `(${totalItems})`;
-            
-            if (totalItems > 0) {
-                cartBadge.textContent = totalItems;
-                cartBadge.style.display = 'flex';
-            } else {
-                cartBadge.style.display = 'none';
-            }
-
-            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
-
-            if (cart.length === 0) {
-                cartItems.innerHTML = `
-                    <div class="text-center py-12" style="color: #64748b;">
-                        <div class="text-6xl mb-4">🛒</div>
-                        <p>Tu carrito está vacío</p>
-                    </div>
-                `;
-            } else {
-                cartItems.innerHTML = cart.map(item => `
-                    <div class="cart-item">
-                        <div class="flex gap-4">
-                            <div class="w-20 h-20 rounded-lg overflow-hidden flex items-center justify-center" style="background-color: #f3f4f6;">
-                                <img src="${item.image}" alt="${item.name}" style="width: 100%; height: 100%; object-fit: contain;" onerror="this.style.display='none';">
-                            </div>
-                            <div class="flex-1">
-                                <h5 class="font-semibold mb-1 text-sm" style="color: #1e293b;">${item.name}</h5>
-                                <p class="text-xs mb-2" style="color: #64748b;">$${item.price.toFixed(2)}</p>
-                                <div class="quantity-control">
-                                    <button class="quantity-btn" onclick="decreaseQuantity(${item.id})">−</button>
-                                    <span class="font-semibold text-sm" style="color: #1e293b;">${item.quantity}</span>
-                                    <button class="quantity-btn" onclick="increaseQuantity(${item.id})">+</button>
-                                    <button onclick="removeFromCart(${item.id})" class="text-xs ml-2" style="color: #e94560;">Eliminar</button>
-                                </div>
-                            </div>
-                            <div class="font-bold text-sm" style="color: #1e293b;">
-                                $${(item.price * item.quantity).toFixed(2)}
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            }
-        }
-
-        // Add to Cart
-        function addToCart(id, name, price, image) {
-            const existingItem = cart.find(item => item.id === id);
-            
-            if (existingItem) {
-                existingItem.quantity += 1;
-            } else {
-                cart.push({ id, name, price, image, quantity: 1 });
-            }
-            
-            updateCart();
-            openCart();
-        }
-
-        // Cart Actions
-        function increaseQuantity(productId) {
-            const item = cart.find(item => item.id === productId);
-            if (item) {
-                item.quantity += 1;
-                updateCart();
-            }
-        }
-
-        function decreaseQuantity(productId) {
-            const item = cart.find(item => item.id === productId);
-            if (item && item.quantity > 1) {
-                item.quantity -= 1;
-                updateCart();
-            }
-        }
-
-        function removeFromCart(productId) {
-            cart = cart.filter(item => item.id !== productId);
-            updateCart();
-        }
-
-        // Cart UI Controls
-        function openCart() {
-            document.getElementById('cartSidebar').classList.add('open');
-            document.getElementById('cartOverlay').classList.add('show');
-        }
-
-        function closeCart() {
-            document.getElementById('cartSidebar').classList.remove('open');
-            document.getElementById('cartOverlay').classList.remove('show');
-        }
-
-        // Event Listeners
-        document.getElementById('cartBtn').addEventListener('click', openCart);
-        document.getElementById('closeCart').addEventListener('click', closeCart);
-        document.getElementById('cartOverlay').addEventListener('click', closeCart);
-        document.getElementById('checkoutBtn').addEventListener('click', () => {
-            const message = document.createElement('div');
-            message.textContent = 'La pasarela de pagos se integrará próximamente';
-            message.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: #2563eb; color: white; padding: 16px 32px; border-radius: 8px; z-index: 2000; font-weight: 600;';
-            document.body.appendChild(message);
-            setTimeout(() => message.remove(), 3000);
-        });
-
-        // Initialize cart
-        updateCart();
-
         // Element SDK Configuration
         const defaultConfig = {
-            page_title: "Contáctanos",
-            page_subtitle: "Estamos aquí para ayudarte. Ponte en contacto con nosotros.",
-            whatsapp_text: "Chatea con nosotros en WhatsApp",
-            whatsapp_number: "5491112345678",
-            email: "contacto@guyamode.com",
-            phone: "+54 9 11 1234-5678",
-            phone_link: "+5491112345678",
-            location: "Av. Corrientes 1234<br>Buenos Aires, Argentina<br>C1043 CABA",
-            hours_title: "Horario de Atención",
-            weekday_hours: "9:00 AM - 6:00 PM",
-            saturday_hours: "10:00 AM - 2:00 PM",
-            sunday_hours: "Cerrado",
-            company_title: "GuyaMode",
-            company_description: "Somos una empresa dedicada a ofrecer moda de calidad inspirada en las tendencias internacionales. Con años de experiencia en el sector, nos especializamos en ropa y accesorios para hombres y mujeres que buscan estilo, elegancia y comodidad. Nuestro compromiso es brindarte la mejor experiencia de compra con productos exclusivos y un servicio personalizado.",
+            contact_title: "Contáctanos",
+            contact_subtitle: "Estamos aquí para ayudarte. Escríbenos y te responderemos lo antes posible",
+            whatsapp_number: "+1234567890",
+            whatsapp_button_text: "Chatea con nosotros en WhatsApp",
+            email_address: "info@guyamode.com",
+            physical_address: "Calle Principal #123\nCiudad, País",
+            schedule_title: "Horario de Atención",
+            schedule_weekdays: "Lunes a Viernes: 9:00 AM - 6:00 PM",
+            schedule_saturday: "Sábado: 10:00 AM - 4:00 PM",
+            schedule_sunday: "Domingo: Cerrado",
             background_color: "#f8f9fa",
             surface_color: "#ffffff",
             text_color: "#1e293b",
-            primary_action_color: "#25D366",
-            secondary_action_color: "#2563eb",
+            primary_action_color: "#2563eb",
+            secondary_action_color: "#e94560",
             font_family: "ui-sans-serif, system-ui, -apple-system, sans-serif",
             font_size: 16
         };
 
         async function onConfigChange(config) {
-            const pageTitle = config.page_title || defaultConfig.page_title;
-            const pageSubtitle = config.page_subtitle || defaultConfig.page_subtitle;
-            const whatsappText = config.whatsapp_text || defaultConfig.whatsapp_text;
+            const contactTitle = config.contact_title || defaultConfig.contact_title;
+            const contactSubtitle = config.contact_subtitle || defaultConfig.contact_subtitle;
             const whatsappNumber = config.whatsapp_number || defaultConfig.whatsapp_number;
-            const email = config.email || defaultConfig.email;
-            const phone = config.phone || defaultConfig.phone;
-            const phoneLink = config.phone_link || defaultConfig.phone_link;
-            const location = config.location || defaultConfig.location;
-            const hoursTitle = config.hours_title || defaultConfig.hours_title;
-            const weekdayHours = config.weekday_hours || defaultConfig.weekday_hours;
-            const saturdayHours = config.saturday_hours || defaultConfig.saturday_hours;
-            const sundayHours = config.sunday_hours || defaultConfig.sunday_hours;
-            const companyTitle = config.company_title || defaultConfig.company_title;
-            const companyDescription = config.company_description || defaultConfig.company_description;
+            const whatsappBtnText = config.whatsapp_button_text || defaultConfig.whatsapp_button_text;
+            const emailAddress = config.email_address || defaultConfig.email_address;
+            const physicalAddress = config.physical_address || defaultConfig.physical_address;
+            const scheduleTitle = config.schedule_title || defaultConfig.schedule_title;
+            const scheduleWeekdays = config.schedule_weekdays || defaultConfig.schedule_weekdays;
+            const scheduleSaturday = config.schedule_saturday || defaultConfig.schedule_saturday;
+            const scheduleSunday = config.schedule_sunday || defaultConfig.schedule_sunday;
             
             const backgroundColor = config.background_color || defaultConfig.background_color;
             const surfaceColor = config.surface_color || defaultConfig.surface_color;
@@ -470,25 +285,69 @@
             const baseFontStack = `${fontFamily}, ui-sans-serif, system-ui, -apple-system, sans-serif`;
 
             // Update text content
-            document.getElementById('page-title').textContent = pageTitle;
-            document.getElementById('page-subtitle').textContent = pageSubtitle;
-            document.getElementById('whatsapp-text').textContent = whatsappText;
-            document.getElementById('email-link').textContent = email;
-            document.getElementById('email-link').href = `mailto:${email}`;
-            document.getElementById('phone-link').textContent = phone;
-            document.getElementById('phone-link').href = `tel:${phoneLink}`;
-            document.getElementById('location-text').innerHTML = location;
-            document.getElementById('hours-title').textContent = hoursTitle;
-            document.getElementById('weekday-hours').textContent = weekdayHours;
-            document.getElementById('saturday-hours').textContent = saturdayHours;
-            document.getElementById('sunday-hours').textContent = sundayHours;
-            document.getElementById('company-title').textContent = companyTitle;
-            document.getElementById('company-description').textContent = companyDescription;
+            const contactTitleElem = document.getElementById('contact-title');
+            const contactSubtitleElem = document.getElementById('contact-subtitle');
+            const whatsappBtnTextElem = document.getElementById('whatsapp-btn-text');
+            const whatsappLink = document.getElementById('whatsapp-link');
+            const emailTextElem = document.getElementById('email-text');
+            const emailLink = document.getElementById('email-link');
+            const addressTextElem = document.getElementById('address-text');
+            const scheduleTitleElem = document.getElementById('schedule-title');
+            const scheduleWeekdaysElem = document.getElementById('schedule-weekdays');
+            const scheduleSaturdayElem = document.getElementById('schedule-saturday');
+            const scheduleSundayElem = document.getElementById('schedule-sunday');
 
+            if (contactTitleElem) contactTitleElem.textContent = contactTitle;
+            if (contactSubtitleElem) contactSubtitleElem.textContent = contactSubtitle;
+            if (whatsappBtnTextElem) whatsappBtnTextElem.textContent = whatsappBtnText;
+            
             // Update WhatsApp link
-            const whatsappLink = document.querySelector('a[href^="https://wa.me/"]');
-            if (whatsappLink) {
-                whatsappLink.href = `https://wa.me/${whatsappNumber}`;
+            const cleanNumber = whatsappNumber.replace(/[^0-9+]/g, '');
+            if (whatsappLink) whatsappLink.href = `https://wa.me/${cleanNumber}`;
+            
+            // Update email
+            if (emailTextElem) emailTextElem.textContent = emailAddress;
+            if (emailLink) emailLink.href = `mailto:${emailAddress}`;
+            
+            // Update address (preserve line breaks)
+            if (addressTextElem) {
+                addressTextElem.innerHTML = physicalAddress.replace(/\n/g, '<br>');
+            }
+            
+            if (scheduleTitleElem) scheduleTitleElem.textContent = scheduleTitle;
+            
+            // Parse and display schedule lines
+            if (scheduleWeekdaysElem) {
+                const parts = scheduleWeekdays.split(':');
+                if (parts.length >= 2) {
+                    const label = parts[0].trim();
+                    const time = parts.slice(1).join(':').trim();
+                    scheduleWeekdaysElem.innerHTML = `<span class="font-medium" style="color: #1e293b;">${label}:</span> <span style="color: #64748b;">${time}</span>`;
+                } else {
+                    scheduleWeekdaysElem.textContent = scheduleWeekdays;
+                }
+            }
+            
+            if (scheduleSaturdayElem) {
+                const parts = scheduleSaturday.split(':');
+                if (parts.length >= 2) {
+                    const label = parts[0].trim();
+                    const time = parts.slice(1).join(':').trim();
+                    scheduleSaturdayElem.innerHTML = `<span class="font-medium" style="color: #1e293b;">${label}:</span> <span style="color: #64748b;">${time}</span>`;
+                } else {
+                    scheduleSaturdayElem.textContent = scheduleSaturday;
+                }
+            }
+            
+            if (scheduleSundayElem) {
+                const parts = scheduleSunday.split(':');
+                if (parts.length >= 2) {
+                    const label = parts[0].trim();
+                    const time = parts.slice(1).join(':').trim();
+                    scheduleSundayElem.innerHTML = `<span class="font-medium" style="color: #1e293b;">${label}:</span> <span style="color: #64748b;">${time}</span>`;
+                } else {
+                    scheduleSundayElem.textContent = scheduleSunday;
+                }
             }
 
             // Update colors
@@ -498,41 +357,28 @@
             if (header) header.style.backgroundColor = surfaceColor;
             
             const navLinks = document.querySelectorAll('nav a');
-            navLinks.forEach(link => link.style.color = textColor);
-            
-            const cartBtn = document.getElementById('cartBtn');
-            if (cartBtn) cartBtn.style.backgroundColor = secondaryActionColor;
-            
-            const whatsappBtn = document.querySelector('.btn-whatsapp');
-            if (whatsappBtn) whatsappBtn.style.backgroundColor = primaryActionColor;
-
-            const checkoutBtn = document.getElementById('checkoutBtn');
-            if (checkoutBtn) checkoutBtn.style.backgroundColor = '#e94560';
-
-            const sectionTitles = document.querySelectorAll('h2, h3');
-            sectionTitles.forEach(title => title.style.color = textColor);
-            
-            // Keep page title white
-            const pageTitle = document.getElementById('page-title');
-            if (pageTitle) pageTitle.style.color = '#ffffff';
-
-            const emailLink = document.getElementById('email-link');
-            const phoneLinkElem = document.getElementById('phone-link');
-            if (emailLink) emailLink.style.color = secondaryActionColor;
-            if (phoneLinkElem) phoneLinkElem.style.color = secondaryActionColor;
+            navLinks.forEach(link => {
+                if (!link.textContent.includes('Contacto')) {
+                    link.style.color = textColor;
+                }
+            });
 
             // Update fonts
-            document.getElementById('page-title').style.fontFamily = baseFontStack;
-            document.getElementById('page-title').style.fontSize = `${fontSize * 3.125}px`;
+            if (contactTitleElem) {
+                contactTitleElem.style.fontFamily = baseFontStack;
+                contactTitleElem.style.fontSize = `${fontSize * 3}px`;
+            }
             
-            document.getElementById('page-subtitle').style.fontFamily = baseFontStack;
-            document.getElementById('page-subtitle').style.fontSize = `${fontSize * 1.25}px`;
-            
-            document.getElementById('company-title').style.fontFamily = baseFontStack;
-            document.getElementById('company-title').style.fontSize = `${fontSize * 1.875}px`;
-            
-            document.getElementById('company-description').style.fontFamily = baseFontStack;
-            document.getElementById('company-description').style.fontSize = `${fontSize * 1.125}px`;
+            if (contactSubtitleElem) {
+                contactSubtitleElem.style.fontFamily = baseFontStack;
+                contactSubtitleElem.style.fontSize = `${fontSize * 1.25}px`;
+            }
+
+            const headings = document.querySelectorAll('h3');
+            headings.forEach(heading => {
+                heading.style.fontFamily = baseFontStack;
+                heading.style.fontSize = `${fontSize * 1.25}px`;
+            });
         }
 
         function mapToCapabilities(config) {
@@ -594,23 +440,47 @@
 
         function mapToEditPanelValues(config) {
             return new Map([
-                ["page_title", config.page_title || defaultConfig.page_title],
-                ["page_subtitle", config.page_subtitle || defaultConfig.page_subtitle],
-                ["whatsapp_text", config.whatsapp_text || defaultConfig.whatsapp_text],
+                ["contact_title", config.contact_title || defaultConfig.contact_title],
+                ["contact_subtitle", config.contact_subtitle || defaultConfig.contact_subtitle],
                 ["whatsapp_number", config.whatsapp_number || defaultConfig.whatsapp_number],
-                ["email", config.email || defaultConfig.email],
-                ["phone", config.phone || defaultConfig.phone],
-                ["company_title", config.company_title || defaultConfig.company_title],
-                ["company_description", config.company_description || defaultConfig.company_description]
+                ["whatsapp_button_text", config.whatsapp_button_text || defaultConfig.whatsapp_button_text],
+                ["email_address", config.email_address || defaultConfig.email_address],
+                ["physical_address", config.physical_address || defaultConfig.physical_address],
+                ["schedule_title", config.schedule_title || defaultConfig.schedule_title],
+                ["schedule_weekdays", config.schedule_weekdays || defaultConfig.schedule_weekdays],
+                ["schedule_saturday", config.schedule_saturday || defaultConfig.schedule_saturday],
+                ["schedule_sunday", config.schedule_sunday || defaultConfig.schedule_sunday]
             ]);
         }
 
-        window.elementSdk.init({
-            defaultConfig,
-            onConfigChange,
-            mapToCapabilities,
-            mapToEditPanelValues
-        });
+        if (window.elementSdk) {
+            window.elementSdk.init({
+                defaultConfig,
+                onConfigChange,
+                mapToCapabilities,
+                mapToEditPanelValues
+            });
+        }
+
+        // Cart functionality
+        const cartBtn = document.getElementById('cartBtn');
+        const cartSidebar = document.getElementById('cartSidebar');
+        const cartOverlay = document.getElementById('cartOverlay');
+        const closeCart = document.getElementById('closeCart');
+
+        function openCart() {
+            cartSidebar.classList.add('active');
+            cartOverlay.classList.add('active');
+        }
+
+        function closeCartSidebar() {
+            cartSidebar.classList.remove('active');
+            cartOverlay.classList.remove('active');
+        }
+
+        cartBtn.addEventListener('click', openCart);
+        closeCart.addEventListener('click', closeCartSidebar);
+        cartOverlay.addEventListener('click', closeCartSidebar);
     </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aadef8d734cc29c',t:'MTc2NTIxNDQ1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aae433bc726c29c',t:'MTc2NTIxNzg3OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
