@@ -271,42 +271,27 @@
    </main><!-- Cart Overlay -->
 <div class="cart-overlay" id="cartOverlay"></div>
 
-<!-- Cart Sidebar -->
-<aside class="cart-sidebar" id="cartSidebar">
+   <div class="cart-overlay" id="cartOverlay"></div><!-- Cart Sidebar -->
+   <aside class="cart-sidebar" id="cartSidebar">
     <div class="p-6">
-
-        <!-- Título y botón cerrar -->
-        <div class="flex justify-between items-center mb-6">
-            <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3>
-            <button id="closeCart" class="text-2xl" style="color: #64748b; background: none; border: none; cursor: pointer;">✕</button>
-        </div>
-
-        <!-- Items del carrito -->
-        <div id="cartItems" class="mb-6">
-            <div id="emptyCartMessage" class="text-center py-12">
-                <div class="text-6xl mb-6" style="color: #9ca3af;">×</div>
-                <p class="text-base" style="color: #64748b;">Tu carrito está vacío</p>
-            </div>
-        </div>
-
-        <!-- Subtotal + Botón de pago -->
-        <div class="border-t pt-4" style="border-color: #e5e7eb;">
-
-            <div class="flex justify-between items-center mb-4">
-                <span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span>
-                <span id="cartSubtotal" class="text-2xl font-bold" style="color: #ec4899;">$0.00</span>
-            </div>
-
-            <!-- BOTÓN CULQI -->
-            <button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg"
-                style="background-color: #ff69b4; color: #ffffff; border: none; cursor: pointer;">
-                Proceder al pago
-            </button>
-
-        </div>
-
+     <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b; background: none; border: none; cursor: pointer;">✕</button>
+     </div>
+     <div id="cartItems" class="mb-6">
+      <div id="emptyCartMessage" class="text-center py-12">
+       <div class="text-6xl mb-6" style="color: #9ca3af;">
+        🛒
+       </div>
+       <p class="text-base" style="color: #64748b;">Tu carrito está vacío</p>
+      </div>
+     </div>
+     <div class="border-t pt-4" style="border-color: #e5e7eb;">
+      <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #e53e3e;">$0.00</span>
+      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background: linear-gradient(135deg, #e53e3e 0%, #9333ea 100%); color: #ffffff; border: none; cursor: pointer;"> Proceder al Pago </button>
+      <p class="text-center text-sm mt-4" style="color: #64748b;">Pasarela de pagos disponible próximamente</p>
+     </div>
     </div>
-</aside>
+   </aside><!-- Footer -->
    <footer class="w-full py-12" style="background-color: #1e293b;">
     <div class="max-w-7xl mx-auto px-4 md:px-6">
      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
