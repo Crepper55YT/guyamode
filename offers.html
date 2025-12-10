@@ -507,22 +507,46 @@
      </div>
     </div>
    </footer><!-- Toast Notification -->
-   <div id="toast" style="position: fixed; bottom: 24px; right: 24px; background-color: #10b981; color: #ffffff; padding: 16px 24px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1000;"></div><!-- Cart Overlay -->
-   <div class="cart-overlay" id="cartOverlay"></div><!-- Cart Sidebar -->
-   <aside class="cart-sidebar" id="cartSidebar">
-    <div class="p-6">
-     <div class="flex justify-between items-center mb-6">
-      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3><button id="closeCart" class="text-2xl" style="color: #64748b; background: none; border: none; cursor: pointer; transition: color 0.3s ease;" onmouseover="this.style.color='#1e293b'" onmouseout="this.style.color='#64748b'">×</button>
-     </div>
-     <div id="cartItems" class="mb-6"><!-- Cart items will be inserted here -->
-     </div>
-     <div class="border-t pt-4" style="border-color: #e5e7eb;">
-      <div class="flex justify-between items-center mb-4"><span class="text-lg font-semibold" style="color: #1e293b;">Subtotal:</span> <span id="cartSubtotal" class="text-2xl font-bold" style="color: #dc2626;">$0.00</span>
-      </div><button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg" style="background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%); color: #ffffff; border: none; cursor: pointer; transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.02)'" onmouseout="this.style.transform='scale(1)'"> Proceder al Pago </button>
-      <p class="text-center text-sm mt-4" style="color: #64748b;">La pasarela de pagos se integrará próximamente</p>
-     </div>
+   <div id="toast" style="position: fixed; bottom: 24px; right: 24px; background-color: #10b981; color: #ffffff; padding: 16px 24px; border-radius: 8px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2); transform: translateY(100px); opacity: 0; transition: all 0.3s ease; z-index: 1000;"></div>
+<!-- CART OVERLAY -->
+<div class="cart-overlay" id="cartOverlay"></div>
+
+<!-- CART SIDEBAR -->
+<aside class="cart-sidebar" id="cartSidebar">
+  <div class="p-6">
+
+    <div class="flex justify-between items-center mb-6">
+      <h3 class="text-2xl font-bold" style="color: #1e293b;">Tu Carrito</h3>
+      <button id="closeCart" class="text-2xl"
+        style="color:#64748b; background:none; border:none; cursor:pointer; transition: color 0.3s ease;"
+        onmouseover="this.style.color='#1e293b'"
+        onmouseout="this.style.color='#64748b'">×</button>
     </div>
-   </aside>
+
+    <div id="cartItems" class="mb-6">
+      <div id="emptyCartMessage" class="text-center py-12">
+        <div class="text-6xl mb-6" style="color: #9ca3af;">×</div>
+        <p class="text-base" style="color: #64748b;">Tu carrito está vacío</p>
+      </div>
+    </div>
+
+    <div class="border-t pt-4" style="border-color:#e5e7eb;">
+      <div class="flex justify-between items-center mb-4">
+        <span class="text-lg font-semibold" style="color:#1e293b;">Subtotal:</span>
+        <span id="cartSubtotal" class="text-2xl font-bold" style="color:#dc2626;">$0.00</span>
+      </div>
+
+      <button id="checkoutBtn" class="w-full py-3 rounded-lg font-semibold text-lg"
+        style="background: linear-gradient(135deg, #dc2626 0%, #ea580c 100%);
+        color:#ffffff; border:none; cursor:pointer; transition: all 0.3s ease;"
+        onmouseover="this.style.transform='scale(1.02)'"
+        onmouseout="this.style.transform='scale(1)'">
+        Proceder al Pago
+      </button>
+    </div>
+
+  </div>
+</aside>
   </div>
   <script>
         // Element SDK Configuration
@@ -786,7 +810,7 @@
 
         // Load cart from localStorage
         function loadCart() {
-            const savedCart = localStorage.getItem('guyamode_cart');
+            const savedCart = localStorage.getItem('guyamode_home_cart');
             if (savedCart) {
                 try {
                     cart = JSON.parse(savedCart);
@@ -798,7 +822,7 @@
 
         // Save cart to localStorage
         function saveCart() {
-            localStorage.setItem('guyamode_cart', JSON.stringify(cart));
+            localStorage.setItem('guyamode_home_cart', JSON.stringify(cart));
         }
 
         // Cart Functions
@@ -853,7 +877,7 @@
             if (cart.length === 0) {
                 cartItemsContainer.innerHTML = `
                     <div class="empty-cart">
-                        <div class="empty-cart-icon">🛒</div>
+                        <div class="empty-cart-icon">×</div>
                         <h3 style="font-size: 20px; font-weight: 400; color: #1e293b; margin-bottom: 8px;">Tu carrito está vacío</h3>
                     </div>
                 `;
@@ -916,5 +940,13 @@
             onConfigChange(window.elementSdk.config);
         }
     </script>
+    <!-- CULQI SDK -->
+    <script src="https://checkout.culqi.com/js/v4"></script>
+
+    <!-- ARCHIVO DEL CARRITO Y PAGO -->
+    <script src="js/guyamode-cart.js"></script>
+    <script src="js/guyamode-pay.js"></script>
+
+    <!-- CLOUDFLARE -->
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9aaeee7932c0c29c',t:'MTc2NTIyNDg5Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
