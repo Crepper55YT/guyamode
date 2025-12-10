@@ -5,21 +5,27 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 });
 
-// Obtener total del carrito desde tu localStorage
+// Obtener total del carrito desde localStorage REAL
 function getCartTotal() {
-    let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    let cart = JSON.parse(localStorage.getItem('guyamode_home_cart') || '[]');
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 }
 
-// Cuando se hace clic en “Proceder al Pago”
+// Evento del botón “Proceder al Pago”
 document.addEventListener("click", (e) => {
     if (e.target.id === "checkoutBtn") {
-        let total = getCartTotal();
+
+        let total = getCartTotal(); // Total en S/
+
+        if (total <= 0) {
+            alert("El carrito está vacío");
+            return;
+        }
 
         Culqi.settings({
             title: "GuyaMode",
             currency: "PEN",
-            amount: total * 100,
+            amount: Math.round(total * 100),  // centavos
         });
 
         Culqi.open();
@@ -32,6 +38,6 @@ function culqi() {
         const token = Culqi.token.id;
         alert("Token recibido: " + token);
 
-        // Después se conecta al backend
+        // AQUI se envía al backend (modo producción)
     }
 }
