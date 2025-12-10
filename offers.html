@@ -916,15 +916,6 @@
             document.getElementById('cartOverlay').classList.remove('open');
         });
 
-        document.getElementById('checkoutBtn').addEventListener('click', () => {
-            if (cart.length > 0) {
-                showToast('Redirigiendo al proceso de pago... 💳');
-                setTimeout(() => {
-                    window.open('https://guyamode.com/checkout', '_blank', 'noopener,noreferrer');
-                }, 500);
-            }
-        });
-
         // Make functions globally accessible
         window.addToCart = addToCart;
         window.removeFromCart = removeFromCart;
