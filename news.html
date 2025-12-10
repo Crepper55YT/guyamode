@@ -550,11 +550,11 @@
 
         // LocalStorage functions
         function saveCartToLocalStorage() {
-            localStorage.setItem('guyamode_collection_cart', JSON.stringify(cart));
+            localStorage.setItem('guyamode_home_cart', JSON.stringify(cart));
         }
 
         function loadCartFromLocalStorage() {
-            const savedCart = localStorage.getItem('guyamode_collection_cart');
+            const savedCart = localStorage.getItem('guyamode_home_cart');
             if (savedCart) {
                 try {
                     cart = JSON.parse(savedCart);
